@@ -18,4 +18,8 @@ public class UserController {
         System.out.println(userServcie.getUserName(1));
         return userServcie.getUserName(1);
     }
+    @RequestMapping(value="/hello")
+    public ModelAndView Hello(){
+        return new ModelAndView("/hello");
+    }
 }
