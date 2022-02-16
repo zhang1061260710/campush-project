@@ -16,4 +16,9 @@ public class UserServcieImpl implements IUserService {
     public String getUserName(Integer id) {
         return userMapper.getUserName(id);
     }
+
+    @Override
+    public int getName(String name) {
+        return userMapper.getName(name);
+    }
 }

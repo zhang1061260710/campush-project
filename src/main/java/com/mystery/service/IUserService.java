@@ -6,4 +6,5 @@ public interface IUserService {
 
     /*获取用户名*/
     String getUserName(Integer id);
+    int getName(String name);
 }

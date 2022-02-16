@@ -6,4 +6,7 @@
     <select id="getUserName" parameterType="int" resultType="String">
         select username from user WHERE id=#{id}
     </select>
+    <select id="getName" parameterType="string" resultType="int">
+        SELECT count(*)  FROM user WHERE username=#{name}
+    </select>
 </mapper>

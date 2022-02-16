@@ -205,7 +205,10 @@
                 <configuration>
                     <version>tomcat8</version>  <!--  setting.xml中配置的tomcat名字-->
                     <port>80</port>             <!--  tomcat端口号-->
-                    <path>/demcampus-project</path>       <!--  项目虚拟路径-->
+                    <path>/</path>       <!--  项目虚拟路径-->
+                    <hostName>192.168.0.24</hostName>
+                    <uriEncoding>UTF-8</uriEncoding>
+                    <useBodyEncodingForURI>true</useBodyEncodingForURI>
                 </configuration>
             </plugin>
             <!--   配置jdk1.8-->

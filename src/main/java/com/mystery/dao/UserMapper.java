@@ -7,5 +7,7 @@ public interface UserMapper {
 
     /*获取用户名*/
     String getUserName(Integer id);
+    /*用户登入*/
+    int getName(String name);
 
 }
