@@ -38,10 +38,8 @@ public class UserController {
        }
 
 
-
-
     @RequestMapping(value="/hello")
     public ModelAndView Hello(){
-        return new ModelAndView("/hello");
+        return new ModelAndView("/index");
     }
 }

@@ -33,8 +33,6 @@
 					$('.password').focus();
 				}else{
 					//ajax提交表单，#login_form为表单的ID。 如：$('#login_form').ajaxSubmit(function(data) { ... });
-                    const a= $('#login_form').serialize()
-                        alert(a)
                         $.ajax({
                             //几个参数需要注意一下
                             type: "POST",//方法类型
@@ -45,8 +43,12 @@
                            /* contentType:"application/json;charset=utf-8",*/
                             dataType: "text",//预期服务器返回的数据类型
                             success: function (data) {
-                                alert(data);//打印服务端返回的数据(调试用)
-                                show_msg('登录成功咯！  正在为您跳转...','/campus_project_war_exploded/user/hello');
+                                if (data >= 1){
+                                    alert(data);//打印服务端返回的数据(调试用)
+                                    show_msg('登录成功咯！  正在为您跳转...','/campus_project_war_exploded/login/index.html');
+                                }else{
+                                    show_err_msg('用户不存在!');
+                                }
                             },
                             error : function() {
                                 alert("异常！");
