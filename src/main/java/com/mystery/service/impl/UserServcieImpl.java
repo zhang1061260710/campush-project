@@ -1,6 +1,7 @@
 package com.mystery.service.impl;
 
 import com.mystery.dao.UserMapper;
+import com.mystery.entity.User;
 import com.mystery.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,11 @@ public class UserServcieImpl implements IUserService {
 
     @Override
     public int getName(String name) {
-        return userMapper.getName(name);
+       return userMapper.getName(name);
+    }
+
+    @Override
+    public void save(User user) {
+        userMapper.save(user);
     }
 }

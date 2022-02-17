@@ -6,17 +6,26 @@ import org.springframework.stereotype.Component;
 public class User {
     private Integer id;
     private String username;
-    private String gender;
-    private Integer age;
+    private String password;
+    private Integer role;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                '}';
+    }
 
     public User() {
     }
 
-    public User(Integer id, String username, String gender, Integer age) {
-        this.id = id;
+    public User(String username,String password,Integer role) {
         this.username = username;
-        this.gender = gender;
-        this.age = age;
+        this.role = role;
+        this.password=password;
     }
 
     public Integer getId() {
@@ -35,29 +44,20 @@ public class User {
         this.username = username;
     }
 
-    public String getGender() {
-        return gender;
+
+    public Integer getRole() {
+        return role;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setRole(Integer role) {
+        this.role = role;
     }
 
-    public Integer getAge() {
-        return age;
+    public String getPassword() {
+        return password;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", gender='" + gender + '\'' +
-                ", age=" + age +
-                '}';
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

@@ -9,4 +9,8 @@
     <select id="getName" parameterType="string" resultType="int">
         SELECT count(*)  FROM user WHERE username=#{name}
     </select>
+    <insert id="save" parameterType="com.mystery.entity.User" >
+        insert into user (username,password,role)
+        values (#{username},#{password},#{role})
+    </insert>
 </mapper>

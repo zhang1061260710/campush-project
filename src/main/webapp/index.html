@@ -18,6 +18,9 @@
 		}
 
     	$(function(){
+            $('#submit_register').click(function(){
+                show_msg('跳转注册页面中！  正在为您跳转...','/campus_project_war_exploded/register.html');
+            })
 			//提交表单
 			$('#submit_btn').click(function(){
 				show_loading();
@@ -41,17 +44,21 @@
                             /*data:JSON.stringify({"username":name,"password":password}),*/
                             //设置请求参数为json字符串,编码为UTF-8
                            /* contentType:"application/json;charset=utf-8",*/
-                            dataType: "text",//预期服务器返回的数据类型
+                            datatype: "json",//预期服务器返回的数据类型
                             success: function (data) {
-                                if (data >= 1){
-                                    alert(data);//打印服务端返回的数据(调试用)
+                                console.log("000", data)
+                                if (data.code == 1){
                                     show_msg('登录成功咯！  正在为您跳转...','/campus_project_war_exploded/login/index.html');
-                                }else{
+                                }else if (data.code == "2"){
+                                    show_msg('已经登入直接跳转！','/campus_project_war_exploded/login/index.html');
+                                }
+                                else{
                                     show_err_msg('用户不存在!');
                                 }
                             },
                             error : function() {
-                                alert("异常！");
+                                alert(data)
+                                show_err_msg('服务端异常请稍后再试!');
                             }
                         });
                     }
@@ -83,6 +90,8 @@
 		.content td {padding:5px 0;}
 		#submit_btn {background-color:#4797ED;border:none;border-radius:10px;box-shadow:0 0 3px #aaa;width:98px;height:41px;line-height:41px;color:#fff;font-size:18px;font-weight:bold;cursor:pointer;margin-right:20px;display:block;outline:none;text-shadow:0 1px 1px #777;float:left;}
 		#submit_btn:hover {background-color:#d8d8d8;color:#666;text-shadow:1px 1px 1px #fff;}
+        #submit_register {background-color:#4797ED;border:none;border-radius:10px;box-shadow:0 0 3px #aaa;width:98px;height:41px;line-height:41px;color:#fff;font-size:18px;font-weight:bold;cursor:pointer;margin-right:20px;display:block;outline:none;text-shadow:0 1px 1px #777;float:left;text-align:center;}
+        #submit_register:hover {background-color:#d8d8d8;color:#666;text-shadow:1px 1px 1px #fff;}
 		.line {float:left;margin-top:10px;}
 		.pd15 {padding-top:15px!important;}
 		.red {color:red;}
@@ -116,7 +125,7 @@ background: -webkit-gradient(linear, center top, center bottom, from(#B4784C), t
                   <th class="pd15"></th>
                   <td class="pd15">
                   	<button id="submit_btn" type="button">登录</button>
-                    <p class="line"><input type="checkbox" id="remember" value=""> <label for="remember">记住我</label></p>
+                    <button id="submit_register" type="button">注册用户</button>
                   </td>
                 </tr>
             </tbody>
