@@ -849,7 +849,7 @@
             this.initContainer();
             this.initData();
         },
-        /* 向后台拉取图片列表数据 */
+        /* 向后台拉取学生列表数据 */
         getImageData: function () {
             var _this = this;
 

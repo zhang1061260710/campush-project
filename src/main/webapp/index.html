@@ -16,6 +16,13 @@
 				obtnLogin.focus();
 			}
 		}
+        $(function(){
+            $.post("/campus_project_war_exploded/user/checkUser",function(data){
+                if (data.code == 1 ){
+                    window.location.href="login/index.html";
+                }
+            },"json")
+        });
 
     	$(function(){
             $('#submit_register').click(function(){
