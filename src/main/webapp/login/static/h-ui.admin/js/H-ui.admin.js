@@ -41,7 +41,7 @@ function getskincookie(){
 	var v = $.cookie("Huiskin");
 	var hrefStr=$("#skin").attr("href");
 	if(v==null||v==""){
-		v="red";
+		v="blue";
 	}
 	if(hrefStr!=undefined){
 		var hrefRes=hrefStr.substring(0,hrefStr.lastIndexOf('skin/'))+'skin/'+v+'/skin.css';
@@ -59,14 +59,14 @@ function Hui_admin_tab(obj){
 		iframe_box = topWindow.find("#iframe_box");
 	//console.log(topWindow);
 	if(!href||href==""){
-		alert("data-href不存在，v2.5版本之前用_href属性，升级后请改为data-href属性");
+		//alert("data-href不存在，v2.5版本之前用_href属性，升级后请改为data-href属性");
 		return false;
 	}if(!title){
-		alert("v2.5版本之后使用data-title属性");
+		//alert("v2.5版本之后使用data-title属性");
 		return false;
 	}
 	if(title==""){
-		alert("data-title属性不能为空");
+		//alert("data-title属性不能为空");
 		return false;
 	}
 	show_navLi.each(function() {
@@ -265,6 +265,10 @@ $(function(){
 		Hui_admin_tab(this);
 		$(".Hui-aside").find(".menu_dropdown dl dd ul li").removeClass("current");
 		$(this).parent().addClass("current");
+	});
+	/*选项卡导航*/
+	$(".navbar-nav").on("click","a",function(){
+		Hui_admin_tab(this);
 	});
 
 	$(document).on("click","#min_title_list li",function(){
