@@ -39,9 +39,9 @@ public class UserController {
 
        try{
            int count =userServcie.getName(UserName);
-          if (count ==1){
+           if (count ==1){
 //              resp.getWriter().print(JSONUtils.toJSONString(Response.OK(null)));
-              return Response.OK(null);
+              return Response.OK(count);
           }else {
 //              JSONUtils.toJSONString(new Response(0,"failed",null));
 //              System.out.println(new Response(0,"failed",null).toString());
@@ -66,7 +66,10 @@ public class UserController {
            resp.setCharacterEncoding("utf-8");
            HttpSession session = req.getSession();
            Object user = session.getAttribute("data");
-           if (user != null){
+           String Username=String.valueOf(user);
+           int count =userServcie.getName(Username);
+           System.out.println(count);
+           if (user != null && count!=0){
                return Response.OK(user);
            }else{
                return Response.Error();

@@ -57,9 +57,11 @@
                                 if (data.code == 1){
                                     show_msg('登录成功咯！  正在为您跳转...','/campus_project_war_exploded/login/index.html');
                                 }else if (data.code == "2"){
+                                    console.log("000", data)
                                     show_msg('已经登入直接跳转！','/campus_project_war_exploded/login/index.html');
                                 }
                                 else{
+                                    console.log("000", data)
                                     show_err_msg('用户不存在!');
                                 }
                             },

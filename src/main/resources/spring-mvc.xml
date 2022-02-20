@@ -21,6 +21,7 @@
     <!-- 开启注解 -->
     <mvc:annotation-driven />
     <mvc:resources mapping="/login/**" location="/login/"/>
+    <mvc:resources mapping="/home/**" location="/home/"/>
     <mvc:default-servlet-handler/>
     <!-- 定义跳转的文件的前后缀 ，视图模式配置-->
     <bean id="viewResolver"
