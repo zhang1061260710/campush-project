@@ -6,6 +6,8 @@ import com.mystery.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServcieImpl implements IUserService {
 
@@ -26,5 +28,20 @@ public class UserServcieImpl implements IUserService {
     @Override
     public void save(User user) {
         userMapper.save(user);
+    }
+
+    @Override
+    public User GetUserList(String name) {
+        return userMapper.GetUserList(name);
+    }
+
+    @Override
+    public List<User> AllUserList() {
+        return userMapper.AllUserList();
+    }
+
+    @Override
+    public void PersonalUpdate(User user) {
+        userMapper.PersonalUpdate(user);
     }
 }

@@ -15,7 +15,15 @@
         <property name="url" value="jdbc:mysql://192.168.5.16:3306/demo?useUnicode=true&amp;characterEncoding=UTF-8"/>
         <property name="username" value="admin"/>
         <property name="password" value="!QAZ2wsx#EDC"/>
-        <property name="loginTimeout" value="25"/>
+    </bean>
+
+    <bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <value>application/json;charset=UTF-8</value>
+                <value>text/html;charset=UTF-8</value>
+            </list>
+        </property>
     </bean>
 
     <!--    2,配置生产SqlSession对象的工厂-->

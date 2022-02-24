@@ -45,10 +45,13 @@
                             /*data:JSON.stringify({"username":name,"password":password}),*/
                             //设置请求参数为json字符串,编码为UTF-8
                            /* contentType:"application/json;charset=utf-8",*/
+                            async: false,
                             dataType: "text",//预期服务器返回的数据类型
                             success: function (data) {
                                if (data = 200){
-                                    show_msg('恭喜注册成功咯！  正在为您跳转...','/campus_project_war_exploded/login/index.html');
+                                   setTimeout(function () {
+                                       show_msg('恭喜注册成功咯！  正在为您跳转...','login/index.html');
+                                   }, 2000);
                                 }else{
                                     show_err_msg('注册失败!');
                                 }
