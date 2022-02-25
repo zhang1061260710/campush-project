@@ -18,7 +18,7 @@ public class HealthdailyServiceImpl implements IHealthdailyService {
     }
 
     @Override
-    public List<Healthdaily> query(String datemin, String datemax, Integer querycontent) {
-        return healthdailyMapper.query(datemin,datemax,querycontent);
+    public List<Healthdaily> query(String datemin, String datemax, String querycontent) {
+        return healthdailyMapper.query(datemin,datemax);
     }
 }

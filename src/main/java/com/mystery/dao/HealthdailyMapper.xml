@@ -8,5 +8,22 @@
 
     <select id="query" parameterType="String" resultType="com.mystery.entity.Healthdaily">
         select * from healthdaily
+        <where>
+                <if test="datemin != null">
+                    /*time&lt;=#{datemax} and*/ #{datemax}>=time
+                </if>
+                <if test="#{datemax} != null">
+                    time&gt;=#{datemin}
+                </if>
+                <!--<if test="querycontent == null">
+                    time&gt;=#{datemin} AND time&lt;=#{datemax}
+                </if>
+                <if test="datemin == null and datemax==null">
+                    numberl=#{querycontent}
+                </if>
+                <if test="datemin != null and datemax !=null and querycontent!=null">
+                    time&gt;=#{datemin} AND time&lt;=#{datemax} AND numberl=#{querycontent}
+                </if>-->
+        </where>
     </select>
 </mapper>
