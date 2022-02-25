@@ -111,7 +111,6 @@ public class UserController {
             User userlist= userServcie.GetUserList(Username);
             SerializeFilter scriptArrayFilter = null;
             String jsonStr = JSONObject.toJSONString(userlist,new SerializeFilter[]{scriptArrayFilter}, SerializerFeature.WriteMapNullValue);
-            System.out.println(jsonStr);
             return Response.OK(JSON.parseObject(jsonStr));
         }
     }
@@ -122,7 +121,6 @@ public class UserController {
         List <User> Alluser= userServcie.AllUserList();
         SerializeFilter scriptArrayFilter = null;
         String jsonStr = JSONObject.toJSONString(Alluser,new SerializeFilter[]{scriptArrayFilter}, SerializerFeature.WriteMapNullValue);
-        System.out.println(jsonStr);
        /* 这种是转换乱码为utf8，仅供参考，没啥软用。一般使用框架的响应方式，没必要写成这种。也可以使用（HttpServletRequest req, HttpServletResponse resp）来进行响应
         获取前端传入都值方式有很多，可以用注解实体类接受json，也可以使/用getParameter，或者前端ajax 对应的转进json或者xxx=1 这些都能得到前端输入都内容。方式不要太多
         这里这么简单怎么来！*/
@@ -229,7 +227,6 @@ public class UserController {
         String kvname=String.valueOf(kv);
         user.setUsername(kvname);
         userServcie.PersonalUpdate(user);
-        System.out.println(user);
         JSONObject json=new JSONObject();
         json.put("message","ok");
         return JSONObject.toJSONString(json);
