@@ -7,5 +7,5 @@ import java.util.List;
 public interface IHealthdailyService {
     List<Healthdaily> listuser();
 
-    List<Healthdaily> query(String datemin,String datemax,String querycontent);
+    List<Healthdaily> query(String datemin,String datemax,String QueryContent);
 }

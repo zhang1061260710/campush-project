@@ -34,7 +34,6 @@ public class CollegeController {
         }*/
         SerializeFilter scriptArrayFilter = null;
         String jsonStr = JSONObject.toJSONString(college,new SerializeFilter[]{scriptArrayFilter}, SerializerFeature.WriteMapNullValue);
-        System.out.println(jsonStr);
         /*resp.getWriter().print(JSON.parseObject(jsonStr));*/
         resp.getWriter().print(jsonStr);
     }
@@ -54,7 +53,6 @@ public class CollegeController {
     @RequestMapping(value = "/save" ,method = RequestMethod.POST)
     public String saveCollege(String name){
         try {
-            System.out.println(name);
             collegeService.save(name);
         }catch (Exception e){
             return "sql error";

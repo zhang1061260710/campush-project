@@ -165,8 +165,6 @@
 		var collegeid = $('#collegeid').val()  //学院
 		var photo=$('#getid').val()		//图片路径
 		var param = {"numberl": numberl,"fullname":fullname,"gender":gender,"speciality":articlesort,"classnumber":keywords,"contactnumber":author,"mail":mail,"college":collegeid,"photo":photo};
-		alert(param);
-		console.log(param)
 		$.ajax({
 			timeout : 20000,
 			type : "POST",
@@ -355,7 +353,6 @@
 		// 文件上传成功，给item添加成功class, 用样式标记上传成功。
 		uploader.on( 'uploadSuccess', function( file,response ) {
 			$('#getid').val(response.img);
-			console.log(response);
 			$( '#'+file.id ).addClass('upload-state-success').find(".state").text("已上传");
 		});
 

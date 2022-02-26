@@ -53,15 +53,12 @@
                            /* contentType:"application/json;charset=utf-8",*/
                             datatype: "json",//预期服务器返回的数据类型
                             success: function (data) {
-                                console.log("000", data)
                                 if (data.code == 1){
                                     show_msg('登录成功咯！  正在为您跳转...','/login/index.html');
                                 }else if (data.code == "2"){
-                                    console.log("000", data)
                                     show_msg('已经登入直接跳转！','/login/index.html');
                                 }
                                 else{
-                                    console.log("000", data)
                                     show_err_msg('用户不存在!');
                                 }
                             },

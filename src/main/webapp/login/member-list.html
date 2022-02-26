@@ -31,7 +31,7 @@
 		<input type="text" class="input-text" style="width:250px" placeholder="输入学号进行查询...." id="querycontent" name="querycontent">
 		<button type="submit" class="btn btn-success radius" id="query" name="query"><i class="Hui-iconfont">&#xe665;</i> 搜日报</button>
 	</div>
-	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="member_add('添加日报','member-add.html','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加日报</a></span> <span class="r">共有数据：<strong>88</strong> 条</span> </div>
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="member_add('添加日报','member-add.html','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加日报</a></span> <span class="r">共有数据：<strong id="count"></strong> 条</span> </div>
 	<div class="mt-20">
 	<table class="table table-border table-bordered table-hover table-bg table-sort">
 		<thead>
@@ -84,6 +84,7 @@
 <script type="text/javascript">
 	$(function(){
 		$('#query').click(function() {
+			$('#trlist').parent().empty();
 			var datemin = $('#datemin').val();
 			var datemax= $('#datemax').val()
 			var querycontent= $('#querycontent').val()
@@ -95,11 +96,52 @@
 				/*data:JSON.stringify({"username":name,"password":password}),*/
 				//设置请求参数为json字符串,编码为UTF-8
 				/*contentType:"test/html;charset=utf-8",*/
-				datatype: "text",//预期服务器返回的数据类型
+				datatype: "json",//预期服务器返回的数据类型
 				success: function (data) {
-					if(data=="ok") {
-						alert("添加成功")
-						location.replace(document.referrer);
+					for(var i=0;i<data.length;i++){
+						var numberl = data[i].numberl;
+						var username= data[i].username
+						var contactnumber= data[i].contactnumber
+						var dormitory= data[i].dormitory
+						var dormitoryid= data[i].dormitoryid
+						var abnormal= data[i].abnormal
+						var diagnosis= data[i].diagnosis
+						var highrisk= data[i].highrisk
+						var source= data[i].source
+						var time = data[i].time
+						var warning= data[i].warning
+						if(abnormal==0){
+							abnormal='否'
+						}else {
+							abnormal='是'
+						}
+						if (diagnosis==0){
+							diagnosis='否'
+						}else {
+							diagnosis='是'
+						}
+						if(highrisk==0){
+							highrisk='否'
+						}else{
+							highrisk='是'
+						}
+						var newtime = timestampToTime(time)
+						var New=$('<tr class="text-c" id="trlist2">' +
+								'<td><input type="checkbox" value="1" name=""></td>\n' +
+								'<td>'+ numberl +'</td>' +
+								'<td><u style="cursor:pointer" class="text-primary" onclick="member_show(\'张三\',\'member-show.html\',\'10001\',\'360\',\'400\')">'+username+'</u></td>' +
+								'<td>'+contactnumber+'</td>'+
+								'<td>' +dormitory+ '</td>'+
+								'<td>' +dormitoryid+ '</td>' +
+								'<td>' +abnormal+'</td>' +
+								'<td>' +diagnosis+'</td>' +
+								'<td>' +highrisk+ '</td>' +
+								'<td>' +source+'</td>' +
+								'<td>'+newtime+'</td>' +
+								'<td class="td-manage"><a style="text-decoration:none" onClick="member_stop(this,\'10001\')" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a> <a title="编辑" href="javascript:;" onclick="member_edit(\'编辑\',\'member-add.html\',\'4\',\'\',\'510\')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a><!-- <a style="text-decoration:none" class="ml-5" onClick="change_password(\'修改密码\',\'change-password.html\',\'10001\',\'600\',\'270\')" href="javascript:;" title="修改密码"><i class="Hui-iconfont">&#xe63f;</i></a>--> <a title="删除" href="javascript:;" onclick="member_del(this,\'1\')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>\n' +
+								'</tr>');
+						$('#zhutiTable').append(New);
+						$('#count').text(i+1)
 					}
 				},
 				error : function() {
@@ -147,7 +189,7 @@
 						highrisk='是'
 					}
 					var newtime = timestampToTime(time)
-					var New=$('<tr class="text-c">' +
+					var New=$('<tr class="text-c" id="trlist">' +
 							'<td><input type="checkbox" value="1" name=""></td>\n' +
 							'<td>'+ numberl +'</td>' +
 							'<td><u style="cursor:pointer" class="text-primary" onclick="member_show(\'张三\',\'member-show.html\',\'10001\',\'360\',\'400\')">'+username+'</u></td>' +
@@ -177,7 +219,7 @@
 		var s = date.getSeconds();
 		return Y+M+D+h+m;
 	}
-$(function(){
+/*$(function(){
 	$('.table-sort').dataTable({
 		"aaSorting": [[ 1, "desc" ]],//默认第几个排序
 		"bStateSave": true,//状态保存
@@ -187,7 +229,7 @@ $(function(){
 		]
 	});
 	
-});
+});*/
 /*用户-添加*/
 function member_add(title,url,w,h){
 	layer_show(title,url,w,h);

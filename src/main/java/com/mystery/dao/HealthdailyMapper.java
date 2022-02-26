@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface HealthdailyMapper {
     List <Healthdaily> listuser();
-    List<Healthdaily> query(@Param("datemin") String datemin,@Param("datemax") String datemax);
+    List<Healthdaily> query(@Param("datemin") String datemin,@Param("datemax") String datemax,@Param("QueryContent")String QueryContent);
 }
