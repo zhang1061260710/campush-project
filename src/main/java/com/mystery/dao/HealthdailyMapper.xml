@@ -18,4 +18,8 @@
                   and numberl=#{QueryContent}
                 </if>
     </select>
+    <insert id="save" parameterType="com.mystery.entity.Healthdaily">
+            insert into user (numberl,username,contactnumber,dormitory,dormitoryid,abnormal,diagnosis,highrisk,source,time,warning)
+            values (#{numberl},#{username},#{contactnumber},#{dormitory},#{dormitoryid},#{abnormal},#{diagnosis},#{highrisk},#{source},#{time},#{warning})
+    </insert>
 </mapper>

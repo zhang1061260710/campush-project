@@ -120,7 +120,7 @@
 		</div>
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
-				<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+				<input class="btn btn-primary radius" type="submit" onclick="add()" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
 			</div>
 		</div>
 	</form>
@@ -138,6 +138,25 @@
 <script type="text/javascript" src="lib/jquery.validation/1.14.0/validate-methods.js"></script> 
 <script type="text/javascript" src="lib/jquery.validation/1.14.0/messages_zh.js"></script>
 <script type="text/javascript">
+	function add() {
+		var arry=$('#form-member-add').serializeArray()
+		$.ajax({
+			//几个参数需要注意一下
+			type: "POST",//方法类型
+			url: "/Healthdaily/SaveDaily" ,//url
+			data: JSON.stringify(arry),
+			/*data:JSON.stringify({"username":name,"password":password}),*/
+			//设置请求参数为json字符串,编码为UTF-8
+			/*contentType:"test/html;charset=utf-8",*/
+			datatype: "json",//预期服务器返回的数据类型
+			success: function (data) {
+
+			},
+			error : function() {
+				alert(data)
+			}
+		});
+	}
 $(function(){
 	$('.skin-minimal input').iCheck({
 		checkboxClass: 'icheckbox-blue',

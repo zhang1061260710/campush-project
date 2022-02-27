@@ -7,6 +7,7 @@ import com.mystery.entity.Healthdaily;
 import com.mystery.entity.Response;
 import com.mystery.service.IHealthdailyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,6 +48,8 @@ public class HealthdailyController {
     }
 
     @RequestMapping(value = "/SaveDaily", method = RequestMethod.POST)
-    public Response register(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public Response register(@RequestBody Healthdaily healthdaily) throws ServletException, IOException {
+        System.out.println(healthdaily);
+        return null;
     }
 }

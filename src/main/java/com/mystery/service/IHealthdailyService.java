@@ -8,4 +8,6 @@ public interface IHealthdailyService {
     List<Healthdaily> listuser();
 
     List<Healthdaily> query(String datemin,String datemax,String QueryContent);
+
+    void save(Healthdaily healthdaily);
 }

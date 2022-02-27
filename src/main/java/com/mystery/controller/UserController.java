@@ -197,7 +197,7 @@ public class UserController {
             从0开始到获取到项目路径加项目名字,可以拼接自定义目录，如果使用yaml 配置文件，来指定目录可以动态获取配置文件中配置的路径，
             此次项目简单的写一下路径使用为项目路径，表明一下之后可以优化的方向。
             */
-            String uuid = UUID.randomUUID().toString(); //创建uuid 随机文件名
+            String uuid = UUID.randomUUID().toString(); //创建uuid 随机文件名,建议使用md5 活着base64 可以找回图片
             String newuuid =uuid.replaceAll("-", ""); //去除uuid中自带的-
             String newfilename=newuuid+suffix;  //使用uuid拼接后缀形成最后的图片名字
             path = path.substring(0, index + "campush-project".length()) + "/src/main/webapp/tmpFiles";  //拼接上传文件路径
