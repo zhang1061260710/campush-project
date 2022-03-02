@@ -89,8 +89,9 @@ public class UserController {
         Object user = session.getAttribute("data");
         String Username=String.valueOf(user);
         int count =userServcie.getName(Username);
+        User user1=userServcie.GetUserList(Username);
         if (user != null && count!=0){
-            return Response.OK(Username);
+            return Response.OK(user1);
         }else{
             return Response.Error();
         }

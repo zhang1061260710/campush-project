@@ -105,7 +105,7 @@
 		<nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
 			<ul class="cl">
 				<li> <a class="logo navbar-logo f-l mr-10 hidden-xs" href="userindex.html">返回主页</a></li>
-				<li>超级管理员</li>
+				<li id="role-li"></li>
 				<li class="dropDown dropDown_hover">
 					<a href="#" class="dropDown_A" id="User"><i class="Hui-iconfont">&#xe6d5;</i></a>
 					<ul class="dropDown-menu menu radius box-shadow">
@@ -266,7 +266,21 @@
 	$(function(){
 		$.post("/user/checkUser",function(data){
 			if (data.code == 1 ){
-				$('#User').append(data.data);
+				if(data.data.fullname==null){
+					$('#User').append(data.data.username);
+					if (data.data.role==0){
+						$('#role-li').append("超级管理员");
+					}else if (data.data.role==2){
+						$('#role-li').append("学生")
+					}
+				}else {
+					$('#User').append(data.data.fullname);
+					if (data.data.role==0){
+						$('#role-li').append("超级管理员");
+					}else if (data.data.role==2){
+						$('#role-li').append("学生")
+					}
+				}
 			}else if (data.code == 0 ){
 				window.location.href="../index.html";
 			}
