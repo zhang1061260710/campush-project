@@ -26,4 +26,24 @@ public class HealthdailyServiceImpl implements IHealthdailyService {
     public void save(Healthdaily healthdaily) {
         healthdailyMapper.save(healthdaily);
     }
+
+    @Override
+    public void dele(int id) {
+        healthdailyMapper.dele(id);
+    }
+
+    @Override
+    public void UpdateWarning(String id, String warning) {
+        healthdailyMapper.UpdateWarning(id,warning);
+    }
+
+    @Override
+    public List<Healthdaily> AllWarning(String warning) {
+        return healthdailyMapper.AllWarning(warning);
+    }
+
+    @Override
+    public void deleWarning(int id) {
+        healthdailyMapper.deleWarning(id);
+    }
 }

@@ -19,7 +19,24 @@
                 </if>
     </select>
     <insert id="save" parameterType="com.mystery.entity.Healthdaily">
-            insert into user (numberl,username,contactnumber,dormitory,dormitoryid,abnormal,diagnosis,highrisk,source,time,warning)
+            insert into healthdaily (numberl,username,contactnumber,dormitory,dormitoryid,abnormal,diagnosis,highrisk,source,time,warning)
             values (#{numberl},#{username},#{contactnumber},#{dormitory},#{dormitoryid},#{abnormal},#{diagnosis},#{highrisk},#{source},#{time},#{warning})
     </insert>
+    <delete id="dele" parameterType="int">
+        delete from healthdaily where id = #{id}
+    </delete>
+
+    <update id="UpdateWarning" parameterType="String">
+        UPDATE healthdaily SET warning=#{warning}
+        WHERE id=#{id}
+    </update>
+
+    <select id="AllWarning" parameterType="String" resultType="com.mystery.entity.Healthdaily">
+        select * from healthdaily where warning = #{warning}
+    </select>
+
+    <update id="deleWarning" parameterType="int">
+        UPDATE healthdaily SET warning=0
+        WHERE id=#{id}
+    </update>
 </mapper>

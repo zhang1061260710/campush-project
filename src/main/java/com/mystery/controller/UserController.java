@@ -151,7 +151,6 @@ public class UserController {
             is.close();
             conn.disconnect();
             /*return Response.OK(result);*/
-
             resp.getWriter().print(JSON.parseObject(result));
 
         } catch (Exception e) {
@@ -230,6 +229,14 @@ public class UserController {
         JSONObject json=new JSONObject();
         json.put("message","ok");
         return JSONObject.toJSONString(json);
+    }
+
+    //退出登入
+    @RequestMapping(value = "/OutLogin",method = RequestMethod.POST)
+    public  Response OutLogin(HttpServletRequest req){
+        HttpSession session = req.getSession();
+        session.removeAttribute("data");
+        return Response.OK("ok");
     }
 
     @RequestMapping(value="/hello")

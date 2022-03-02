@@ -24,23 +24,25 @@
 <body>
 <div class="page-container">
 	<p class="f-20 text-success">欢迎使用晋中学院疫情后台！</p>
-	<p>上次登录IP：  上次登录时间：</p>
+	<p id="pid"></p>
 	<table class="table table-border table-bordered table-bg">
 		<thead>
 			<tr>
-				<th colspan="7" scope="col">信息统计</th>
+				<th colspan="8" scope="col">信息统计</th>
 			</tr>
 			<tr class="text-c">
-				<th>统计</th>
-				<th>资讯库</th>
-				<th>图片库</th>
-				<th>产品库</th>
-				<th>用户</th>
-				<th>管理员</th>
+				<th>国家</th>
+				<th>今日新增确诊</th>
+				<th>今日新增死亡</th>
+				<th>今日新增治愈</th>
+				<th>从疫情开始累计确诊</th>
+				<th>从疫情开始累计死亡</th>
+				<th>从疫情开始累计治愈</th>
+				<th>从疫情开始累计境外输入</th>
 			</tr>
 		</thead>
-		<tbody>
-			<tr class="text-c">
+		<tbody id="zhutiTable">
+			<!--<tr class="text-c">
 				<td>总数</td>
 				<td>92</td>
 				<td>9</td>
@@ -79,7 +81,7 @@
 				<td>0</td>
 				<td>0</td>
 				<td>0</td>
-			</tr>
+			</tr>-->
 		</tbody>
 	</table>
 </div>
@@ -98,10 +100,46 @@
 			//设置请求参数为json字符串,编码为UTF-8
 			/* contentType:"application/json;charset=utf-8",*/
 			success: function (data) {
-				/*var obj = JSON.parse(data)*/
-				/*var last=JSON.stringify(data)*/
-				console.log("000",data);
-				console.log(data.reqId,data.code);
+				$('#pid').text("疫情数据上次更新时间："+data.data.lastUpdateTime )
+			for(var i=0;i<data.data.areaTree.length;i++){
+				var obj = data.data.areaTree[i];
+				 /*data1=data1+obj.name+'\r\n';*/
+				if (obj.today.confirm==null){
+					obj.today.confirm="空";
+				}
+				if (obj.today.dead==null){
+					obj.today.dead="空";
+				}
+				if (obj.today.heal==null){
+					obj.today.heal="空";
+				}
+				if (obj.total.confirm==null){
+					obj.total.confirm="空";
+				}
+				if (obj.total.heal==null){
+					obj.total.heal="空";
+				}
+				if (obj.total.dead==null){
+					obj.total.dead="空";
+				}
+				if (obj.total.input==null){
+					obj.total.input="空";
+				}
+				var New=$('<tr class="text-c">'+
+				'<td>'+obj.name+'</td>'+
+				'<td>'+obj.today.confirm+'</td>'+
+				'<td>'+obj.today.dead+'</td>'+
+				'<td>'+obj.today.heal+'</td>'+
+				'<td>'+obj.total.confirm+'</td>'+
+				'<td>'+obj.total.dead+'</td>'+
+				'<td>'+obj.total.heal+'</td>'+
+				'<td>'+obj.total.input+'</td>'+
+				'</tr>');
+				$('#zhutiTable').append(New);
+				}
+/*				console.log(data1);
+				console.log(JSON.parse(data1));
+				alert(data1.length)*/
 			}
 		})
 	});

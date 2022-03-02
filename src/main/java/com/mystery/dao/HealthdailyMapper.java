@@ -15,4 +15,12 @@ public interface HealthdailyMapper {
     List<Healthdaily> query(@Param("datemin") String datemin,@Param("datemax") String datemax,@Param("QueryContent")String QueryContent);
     //新增
     void save (Healthdaily healthdaily);
+    //根据id进行删除
+    void dele (int id);
+
+    void UpdateWarning (@Param("id")String id,@Param("warning")String warning);
+
+    List <Healthdaily> AllWarning(@Param("warning")String warning);
+
+    void  deleWarning(@Param("id")int id);
 }

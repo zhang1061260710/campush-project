@@ -10,4 +10,12 @@ public interface IHealthdailyService {
     List<Healthdaily> query(String datemin,String datemax,String QueryContent);
 
     void save(Healthdaily healthdaily);
+
+    void dele (int id);
+
+    void UpdateWarning (String id,String warning);
+
+    List <Healthdaily> AllWarning(String warning);
+
+    void deleWarning (int id);
 }

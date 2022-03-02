@@ -19,7 +19,25 @@ public class Healthdaily {
     private String source;    //检测来源
     private Timestamp time;    //上报时间
     private int warning;    //是否被警告
-    
+
+    @Override
+    public String toString() {
+        return "Healthdaily{" +
+                "id=" + id +
+                ", numberl=" + numberl +
+                ", username='" + username + '\'' +
+                ", contactnumber=" + contactnumber +
+                ", dormitory='" + dormitory + '\'' +
+                ", dormitoryid=" + dormitoryid +
+                ", abnormal=" + abnormal +
+                ", diagnosis=" + diagnosis +
+                ", highrisk=" + highrisk +
+                ", source='" + source + '\'' +
+                ", time=" + time +
+                ", warning=" + warning +
+                '}';
+    }
+
     public Healthdaily(){}
     public Healthdaily( int numberl, String username, Long contactnumber, String dormitory, int dormitoryid, int abnormal, int diagnosis, int highrisk, String source, Timestamp time, int warning) {
         this.numberl = numberl;

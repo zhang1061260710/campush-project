@@ -25,12 +25,10 @@
 <!--/meta 作为公共模版分离出去-->
 
 <title>添加学院 </title>
-<meta name="keywords" content="H-ui.admin v3.1,H-ui网站后台模版,后台模版下载,后台管理系统模版,HTML后台模版下载">
-<meta name="description" content="H-ui.admin v3.1，是一款由国人开发的轻量级扁平化网站后台模板，完全免费开源的网站后台管理系统模版，适合中小型CMS后台系统。">
 </head>
 <body>
 <article class="page-container">
-	<form action="" method="post" class="form form-horizontal" id="form-member-add">
+	<form action="" method="" class="form form-horizontal" id="form-member-add">
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>学号：</label>
 			<div class="formControls col-xs-8 col-sm-9">
@@ -71,12 +69,12 @@
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>是否异常：</label>
 			<div class="formControls col-xs-8 col-sm-9 skin-minimal">
 				<div class="radio-box">
-					<input name="abnormal" type="radio" id="abnormal-0" checked>
-					<label for="abnormal-0">是</label>
+					<input name="abnormal" type="radio" value="0" id="abnormal-0" checked>
+					<label for="abnormal-0">否</label>
 				</div>
 				<div class="radio-box">
-					<input type="radio" id="abnormal-1" name="abnormal">
-					<label for="abnormal-1">否</label>
+					<input type="radio" id="abnormal-1"value="1" name="abnormal">
+					<label for="abnormal-1">是</label>
 				</div>
 			</div>
 		</div>
@@ -90,12 +88,12 @@
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>是否确诊：</label>
 			<div class="formControls col-xs-8 col-sm-9 skin-minimal">
 				<div class="radio-box">
-					<input name="diagnosis" type="radio" id="diagnosis-0" checked>
-					<label for="diagnosis-0">是</label>
+					<input name="diagnosis" type="radio" value="0" id="diagnosis-0" checked>
+					<label for="diagnosis-0">否</label>
 				</div>
 				<div class="radio-box">
-					<input type="radio" id="diagnosis-1" name="diagnosis">
-					<label for="diagnosis-1">否</label>
+					<input type="radio" id="diagnosis-1" value="1" name="diagnosis">
+					<label for="diagnosis-1">是</label>
 				</div>
 			</div>
 		</div>
@@ -103,12 +101,12 @@
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>是否去过高风险地区：</label>
 			<div class="formControls col-xs-8 col-sm-9 skin-minimal">
 				<div class="radio-box">
-					<input name="highrisk" type="radio" id="highrisk-0" checked>
-					<label for="highrisk-0">是</label>
+					<input name="highrisk" type="radio" value="0" id="highrisk-0" checked>
+					<label for="highrisk-0">否</label>
 				</div>
 				<div class="radio-box">
-					<input type="radio" id="highrisk-1" name="highrisk">
-					<label for="highrisk-1">否</label>
+					<input type="radio" id="highrisk-1" value="1" name="highrisk">
+					<label for="highrisk-1">是</label>
 				</div>
 			</div>
 		</div>
@@ -139,18 +137,41 @@
 <script type="text/javascript" src="lib/jquery.validation/1.14.0/messages_zh.js"></script>
 <script type="text/javascript">
 	function add() {
-		var arry=$('#form-member-add').serializeArray()
+		var numberl = $('#numberl').val();
+		var username = $('#username').val();
+		var contactnumber = $('#contactnumber').val();
+		var dormitory = $('#dormitory').val();
+		var dormitoryid = $('#dormitoryid').val();
+		var abnormal = $("input[name='abnormal']:checked").val();
+		var diagnosis = $("input[name='diagnosis']:checked").val();
+		var highrisk = $("input[name='highrisk']:checked").val();
+		var source = $('#source').val();
+		var param ={"numberl":numberl,"username":username,"contactnumber":contactnumber,"dormitory":dormitory,"dormitoryid":dormitoryid,"abnormal":abnormal,"diagnosis":diagnosis,"highrisk":highrisk,"source":source};
+		console.log(param);
+				/*	var DataDeal = {
+                        //将从form中通过$('#form').serialize()获取的值转成json
+                        formToJson: function (data) {
+                            data = data.replace(/&/g, "\",\"");
+                            data = data.replace(/=/g, "\":\"");
+                            data = "{\"" + data + "\"}";
+                            return data;
+                        }
+                    };*/
+/*		var arry=$('#form-member-add').serialize()
+		var jsonData=DataDeal.formToJson(arry);*/
 		$.ajax({
 			//几个参数需要注意一下
+			async:false, //同步
 			type: "POST",//方法类型
 			url: "/Healthdaily/SaveDaily" ,//url
-			data: JSON.stringify(arry),
+			data: JSON.stringify(param),
 			/*data:JSON.stringify({"username":name,"password":password}),*/
 			//设置请求参数为json字符串,编码为UTF-8
-			/*contentType:"test/html;charset=utf-8",*/
+			contentType:"application/json;charset=utf-8",
 			datatype: "json",//预期服务器返回的数据类型
 			success: function (data) {
-
+				console.log(data);
+				parent.location.reload(); //刷新父页面
 			},
 			error : function() {
 				alert(data)

@@ -37,6 +37,7 @@
 		<thead>
 			<tr class="text-c">
 				<th width="25"><input type="checkbox" name="" value=""></th>
+				<th style='display:none'>id</th>
 				<th width="80">学号</th>
 				<th width="50">姓名</th>
 				<th width="100">联系电话</th>
@@ -99,6 +100,7 @@
 				datatype: "json",//预期服务器返回的数据类型
 				success: function (data) {
 					for(var i=0;i<data.length;i++){
+						var id = data[i].id;
 						var numberl = data[i].numberl;
 						var username= data[i].username
 						var contactnumber= data[i].contactnumber
@@ -128,8 +130,9 @@
 						var newtime = timestampToTime(time)
 						var New=$('<tr class="text-c" id="trlist">' +
 								'<td><input type="checkbox" value="1" name=""></td>\n' +
+								'<td style=\'display:none\'>'+ id +'</td>'+
 								'<td>'+ numberl +'</td>' +
-								'<td><u style="cursor:pointer" class="text-primary" onclick="member_show(\'张三\',\'member-show.html\',\'10001\',\'360\',\'400\')">'+username+'</u></td>' +
+								'<td><u style="cursor:pointer" class="text-primary">'+username+'</u></td>' +
 								'<td>'+contactnumber+'</td>'+
 								'<td>' +dormitory+ '</td>'+
 								'<td>' +dormitoryid+ '</td>' +
@@ -138,9 +141,21 @@
 								'<td>' +highrisk+ '</td>' +
 								'<td>' +source+'</td>' +
 								'<td>'+newtime+'</td>' +
-								'<td class="td-manage"><a style="text-decoration:none" onClick="member_stop(this,\'10001\')" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a> <a title="编辑" href="javascript:;" onclick="member_edit(\'编辑\',\'member-add.html\',\'4\',\'\',\'510\')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a><!-- <a style="text-decoration:none" class="ml-5" onClick="change_password(\'修改密码\',\'change-password.html\',\'10001\',\'600\',\'270\')" href="javascript:;" title="修改密码"><i class="Hui-iconfont">&#xe63f;</i></a>--> <a title="删除" href="javascript:;" onclick="member_del(this,\'1\')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>\n' +
+								'<td class="td-manage"><a style="text-decoration:none" onClick="member_stop(this,\'10001\')" href="javascript:;" title="警告" id="jingao'+id+'"></a> <a title="编辑" href="javascript:;" onclick="member_edit(\'编辑\',\'member-add.html\',\'4\',\'\',\'510\')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a><!-- <a style="text-decoration:none" class="ml-5" onClick="change_password(\'修改密码\',\'change-password.html\',\'10001\',\'600\',\'270\')" href="javascript:;" title="修改密码"><i class="Hui-iconfont">&#xe63f;</i></a>--> <a title="删除" href="javascript:;" onclick="member_del(this,\'1\')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>\n' +
 								'</tr>');
 						$('#zhutiTable').append(New);
+						if (warning==0){
+							var jg=$(
+									'<i class="Hui-iconfont">&#xe631;</i>'
+							)
+							/*$("#jingao"+id).append(jg)*/
+							$("#jingao"+id).append(jg)
+						}else {
+							var jg=$(
+									'<i class="Hui-iconfont">&#xe6e1;</i>'
+							)
+							$("#jingao"+id).append(jg)
+						}
 						$('#count').text(i+1)
 					}
 				},
@@ -162,6 +177,7 @@
 			/* contentType:"application/json;charset=utf-8",*/
 			success: function (data) {
 				for(var i=0;i<data.length;i++){
+					var id = data[i].id;
 					var numberl = data[i].numberl;
 					var username= data[i].username
 					var contactnumber= data[i].contactnumber
@@ -188,11 +204,13 @@
 					}else{
 						highrisk='是'
 					}
+
 					var newtime = timestampToTime(time)
 					var New=$('<tr class="text-c" id="trlist">' +
 							'<td><input type="checkbox" value="1" name=""></td>\n' +
+							'<td style=\'display:none\'>'+ id +'</td>'+
 							'<td>'+ numberl +'</td>' +
-							'<td><u style="cursor:pointer" class="text-primary" onclick="member_show(\'张三\',\'member-show.html\',\'10001\',\'360\',\'400\')">'+username+'</u></td>' +
+							'<td><u style="cursor:pointer" class="text-primary">'+username+'</u></td>' +
 							'<td>'+contactnumber+'</td>'+
 							'<td>' +dormitory+ '</td>'+
 							'<td>' +dormitoryid+ '</td>' +
@@ -201,9 +219,22 @@
 							'<td>' +highrisk+ '</td>' +
 							'<td>' +source+'</td>' +
 							'<td>'+newtime+'</td>' +
-							'<td class="td-manage"><a style="text-decoration:none" onClick="member_stop(this,\'10001\')" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a> <a title="编辑" href="javascript:;" onclick="member_edit(\'编辑\',\'member-add.html\',\'4\',\'\',\'510\')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a><!-- <a style="text-decoration:none" class="ml-5" onClick="change_password(\'修改密码\',\'change-password.html\',\'10001\',\'600\',\'270\')" href="javascript:;" title="修改密码"><i class="Hui-iconfont">&#xe63f;</i></a>--> <a title="删除" href="javascript:;" onclick="member_del(this,\'1\')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>\n' +
+							'<td class="td-manage"><a style="text-decoration:none" onClick="member_stop(this,\'10001\')" href="javascript:;" title="警告" id="jingao'+id+'"></a> <a title="编辑" href="javascript:;" onclick="member_edit(\'编辑\',\'member-add.html\',\'4\',\'\',\'510\')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a><!-- <a style="text-decoration:none" class="ml-5" onClick="change_password(\'修改密码\',\'change-password.html\',\'10001\',\'600\',\'270\')" href="javascript:;" title="修改密码"><i class="Hui-iconfont">&#xe63f;</i></a>--> <a title="删除" href="javascript:;" onclick="member_del(this,\'1\')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>\n' +
 							'</tr>');
 					$('#zhutiTable').append(New);
+					if (warning==0){
+						var jg=$(
+								'<i class="Hui-iconfont">&#xe631;</i>'
+						)
+						/*$("#jingao"+id).append(jg)*/
+						$("#jingao"+id).append(jg)
+					}else {
+						$("#jingao"+id).attr("onClick","member_repeat()");
+						var jg=$(
+								'<i class="Hui-iconfont">&#xe6e1;</i>'
+						)
+						$("#jingao"+id).append(jg)
+					}
 					$('#count').text(i+1)
 				}
 			}
@@ -219,6 +250,8 @@
 		var s = date.getSeconds();
 		return Y+M+D+h+m;
 	}
+
+
 /*$(function(){
 	$('.table-sort').dataTable({
 		"aaSorting": [[ 1, "desc" ]],//默认第几个排序
@@ -230,6 +263,10 @@
 	});
 	
 });*/
+/*	$(function () {
+		$('.table-sort').DataTable({
+		});
+	});*/
 /*用户-添加*/
 function member_add(title,url,w,h){
 	layer_show(title,url,w,h);
@@ -238,18 +275,21 @@ function member_add(title,url,w,h){
 function member_show(title,url,id,w,h){
 	layer_show(title,url,w,h);
 }
-/*用户-停用*/
+/*用户-警告*/
 function member_stop(obj,id){
+	var parentTR =obj.parentNode.parentNode;
+	var firstTd_value = $(parentTR).children('td').eq(1).text();
 	layer.confirm('确认要警告吗？警告后此用户被添加至感染警告！',function(index){
 		$.ajax({
 			type: 'POST',
-			url: '',
+			url: '/Healthdaily/UpdateWarning',
+			data: "id="+firstTd_value,
 			dataType: 'json',
 			success: function(data){
-				$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_start(this,id)" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe6e1;</i></a>');
-				$(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已停用</span>');
+				$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_repeat()" href="javascript:;" title="启用"><i id="jingao" class="Hui-iconfont">&#xe6e1;</i></a>');
+				$(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已警告</span>');
 				$(obj).remove();
-				layer.msg('已停用!',{icon: 5,time:1000});
+				layer.msg('警告成功!',{icon: 6,time:1000});
 			},
 			error:function(data) {
 				console.log(data.msg);
@@ -258,16 +298,21 @@ function member_stop(obj,id){
 	});
 }
 
-/*用户-启用*/
+	function member_repeat() {
+		layer.msg('已警告请勿重复警告!，',{icon: 5,time:2000});
+	}
+/*
+/!*用户-启用*!/
 function member_start(obj,id){
+
 	layer.confirm('确认要启用吗？',function(index){
 		$.ajax({
 			type: 'POST',
 			url: '',
 			dataType: 'json',
 			success: function(data){
-				$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_stop(this,id)" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>');
-				$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
+				$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_stop(this,id)" href="javascript:;" title="警告"><i class="Hui-iconfont">&#xe631;</i></a>');
+				$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已警告</span>');
 				$(obj).remove();
 				layer.msg('已启用!',{icon: 6,time:1000});
 			},
@@ -275,8 +320,8 @@ function member_start(obj,id){
 				console.log(data.msg);
 			},
 		});
-	});
-}
+	});s
+}*/
 /*用户-编辑*/
 function member_edit(title,url,id,w,h){
 	layer_show(title,url,w,h);
@@ -287,10 +332,14 @@ function change_password(title,url,id,w,h){
 }
 /*用户-删除*/
 function member_del(obj,id){
+	var parentTR =obj.parentNode.parentNode;
+	var firstTd_value = $(parentTR).children('td').eq(1).text();
+	console.log("删除",firstTd_value);
 	layer.confirm('确认要删除吗？',function(index){
 		$.ajax({
 			type: 'POST',
-			url: '',
+			url: '/Healthdaily/deletel',
+			data: "id="+firstTd_value,
 			dataType: 'json',
 			success: function(data){
 				$(obj).parents("tr").remove();

@@ -39,8 +39,10 @@
 		<div class="dataTables_length" id="table-hover_length">
 			<label>显示
 				<select name="table-hover_length" id="strip" aria-controls="table-hover" class="">
-					<option value="10">10</option><option value="25">25</option>
-					<option value="50">50</option><option value="100">100</option>
+					<option value="10">10</option>
+					<option value="25">25</option>
+					<option value="50">50</option>
+					<option value="100">100</option>
 				</select> 条
 			</label>
 		</div>
@@ -69,9 +71,10 @@
 		</table>
 	<!--	<div class="dataTables_info" id="table-hover_info" role="status" aria-live="polite">显示 0 到 0 条，共 0 条</div>-->
 		<div class="dataTables_paginate paging_simple_numbers" id="table-hover_paginate">
-			<a class="paginate_button previous disabled" aria-controls="table-hover" data-dt-idx="0" tabindex="0" id="table-hover_previous">上一页</a>
-			<span></span>
-			<a class="paginate_button next disabled" aria-controls="table-hover" data-dt-idx="1" tabindex="0" id="table-hover_next">下一页</a>
+			<a class="paginate_button previous disabled" onclick="shangye()" aria-controls="table-hover" data-dt-idx="0" tabindex="0" id="table-hover_previous">上一页</a>
+			<span id="shuzi">
+			</span>
+			<a class="paginate_button next disabled"  onclick="xiaye()" aria-controls="table-hover" data-dt-idx="1" tabindex="0" id="table-hover_next">下一页</a>
 		</div>
 		<!--<table>
 			<tr>
@@ -93,39 +96,47 @@
 	<script type="text/javascript">
 		// 省/直辖市
 		$(function(){
-			var strip=$('#strip').val();
-			alert(strip);
+			var strip=$('#strip').val(); //显示数
+			var page=1;
 			$.ajax({
 				type: "GET",//方法类型
 				url: "/user/Ncoronavirus" ,//url
 				dataType: "json",
 				success: function (data) {
-					$('#pid').text("疫情数据上次更新时间："+data.data.lastUpdateTime )
 					for(var i=0;i<data.data.areaTree.length;i++){
 						var obj = data.data.areaTree[i];
 						if (obj.id==0){
 							console.log(obj.children.length);
-							alert(obj.children.length/strip);
-							for (var t=0;t<obj.children.length;t++){
-								var New=$('<option value="'+t+'">'+obj.children[t].name+'</option>');
+							for (var a=1; a <= Math.ceil(obj.children.length/strip); a++){
+								var Newshuzi=$('<a onclick="fenpage(this)" style="margin: 5px;padding: 5px">'+a+'</a>');
+								$('#shuzi').append(Newshuzi);
+							}
+							var newpage=(page-1)*strip;
+							var new2page=page*strip-1;
+							for (var q=0;q<obj.children.length;q++){
+								var New = $('<option value="' + q + '">' + obj.children[q].name + '</option>');
 								$('#province').append(New);
-								var New2=$('<tr id="trlist" class="text-c">'+
-										'<td>'+obj.children[t].name+'</td>'+
-										'<td>'+obj.children[t].today.confirm+'</td>'+
-										'<td>'+obj.children[t].today.dead+'</td>'+
-										'<td>'+obj.children[t].today.heal+'</td>'+
-										'<td>'+obj.children[t].total.confirm+'</td>'+
-										'<td>'+obj.children[t].total.dead+'</td>'+
-										'<td>'+obj.children[t].total.heal+'</td>'+
-										'<td>'+obj.children[t].lastUpdateTime+'</td>'+
-										'</tr>');
-								$('#zhutiTable').append(New2);
-
+							}
+							for (var t=newpage;t<=new2page;t++){
+								if (t<obj.children.length) {
+									var New2 = $('<tr id="trlist" class="text-c">' +
+											'<td style=\'display:none\'>'+ t +'</td>'+
+											'<td>' + obj.children[t].name + '</td>' +
+											'<td>' + obj.children[t].today.confirm + '</td>' +
+											'<td>' + obj.children[t].today.dead + '</td>' +
+											'<td>' + obj.children[t].today.heal + '</td>' +
+											'<td>' + obj.children[t].total.confirm + '</td>' +
+											'<td>' + obj.children[t].total.dead + '</td>' +
+											'<td>' + obj.children[t].total.heal + '</td>' +
+											'<td>' + obj.children[t].lastUpdateTime + '</td>' +
+											'</tr>');
+									$('#zhutiTable').append(New2);
+								}
 							}
 						}
 					}
 				}
-			})
+			});
 			//市/区
 			$("#province").change(function () {
 				var provid=$('#province').val(); //获取第一下拉框选中值
@@ -152,6 +163,35 @@
 				})
 			})
 		});
+		//分页页面触发事件，点击指定页
+		function fenpage(ojbk) {
+				var firstTd_value = $('#trlist').children('td').eq(0).text();//获取第一行数据的下标，用来计算点击页面是否和当前页面系统
+				var yeshu=$(ojbk).text();//获取页数
+				var strip=$('#strip').val(); //每页显示数
+				var newfirstTd_value=firstTd_value/strip+1;//计算当前页和点击页面是否相同
+				if(yeshu!=newfirstTd_value){
+					$('#trlist').parent().empty();
+					publicajax(yeshu,strip)
+				}
+
+		}
+		//下一页
+		function xiaye(){
+			var firstTd_value = $('#trlist').children('td').eq(0).text();//获取第一行数据的下标
+			var strip=$('#strip').val(); //每页显示数
+			var xia=firstTd_value/strip+2;//+2 算出下一页
+			publicajax(xia,strip);
+		}
+		//上一页
+		function shangye(){
+			var firstTd_value = $('#trlist').children('td').eq(0).text();//获取第一行数据的下标
+			var strip=$('#strip').val(); //每页显示数
+			var xia=firstTd_value/strip;//+2 算出下一页
+			if (xia!=0){
+				publicajax(xia,strip);
+			}
+		}
+
 		//查询按钮触发事件
 		$(function(){
 			$('#query').click(function() {
@@ -170,8 +210,8 @@
 							var obj = data.data.areaTree[i];
 							if (obj.id==0){ //拿到中国
 								if (city=="-1"){
-									var obj2=obj.children[provid];
-									for (var t=0;t<obj2.children.length; t++){
+									var obj2=obj.children[provid]; //拿到省
+									for (var t=0;t<obj2.children.length; t++){//循环省下面所有市区的情况
 										var obj3=obj2.children[t];
 										if (obj3.today.dead==null){
 											obj3.today.dead="暂无数据";
@@ -180,6 +220,7 @@
 											obj3.today.heal="暂无数据";
 										}
 										var Neww=$('<tr id="trlist" class="text-c">'+
+												'<td style=\'display:none\'>'+ t +'</td>'+
 												'<td>'+obj3.name+'</td>'+
 												'<td>'+obj3.today.confirm+'</td>'+
 												'<td>'+obj3.today.dead+'</td>'+
@@ -191,7 +232,7 @@
 												'</tr>');
 										$('#zhutiTable').append(Neww);
 									}
-								}else {
+								}else { //查询指定市区的情况
 									var obj2=obj.children[provid]; //拿到指定省
 									var obj3=obj2.children[city]; //根据省拿到指定市区
 									if (obj3.today.dead==null){
@@ -201,6 +242,7 @@
 										obj3.today.heal="暂无数据";
 									}
 									var Neww=$('<tr id="trlist" class="text-c">'+
+											'<td style=\'display:none\'>'+ t +'</td>'+
 											'<td>'+obj3.name+'</td>'+
 											'<td>'+obj3.today.confirm+'</td>'+
 											'<td>'+obj3.today.dead+'</td>'+
@@ -220,7 +262,90 @@
 				})
 			})
 		});
+// 切换显示页数
+		$(function(){
+			$("#strip").change(function () {
+				$('#trlist').parent().empty();
+				$('#shuzi').empty();
+				var strip=$('#strip').val(); //获取显示数
+				var page=1; //默认最小页数
+				$.ajax({
+					type: "GET",//方法类型
+					url: "/user/Ncoronavirus" ,//url
+					dataType: "json",
+					success: function (data) {
+						for(var i=0;i<data.data.areaTree.length;i++){
+							var obj = data.data.areaTree[i]; //拿到全部国家
+							if (obj.id==0){ //只要中国
+								console.log(obj.children.length); //打印中国下面省多长度
+								//中国省长度除以每页要显示多数量并求小数补全（例如：结果为1.1 得到的是2整数）
+								for (var a=1; a <= Math.ceil(obj.children.length/strip); a++){
+									var Newshuzi=$('<a onclick="fenpage(this)" style="margin: 5px;padding: 5px">'+a+'</a>');
+									$('#shuzi').append(Newshuzi);
+								}
+								var newpage=(page-1)*strip;
+								var new2page=page*strip-1;
+								for (var t=newpage;t<=new2page;t++){
+									if (t<obj.children.length) {
+										var New = $('<option value="' + t + '">' + obj.children[t].name + '</option>');
+										$('#province').append(New);
+										var New2 = $('<tr id="trlist" class="text-c">' +
+												'<td style=\'display:none\'>'+ t +'</td>'+
+												'<td>' + obj.children[t].name + '</td>' +
+												'<td>' + obj.children[t].today.confirm + '</td>' +
+												'<td>' + obj.children[t].today.dead + '</td>' +
+												'<td>' + obj.children[t].today.heal + '</td>' +
+												'<td>' + obj.children[t].total.confirm + '</td>' +
+												'<td>' + obj.children[t].total.dead + '</td>' +
+												'<td>' + obj.children[t].total.heal + '</td>' +
+												'<td>' + obj.children[t].lastUpdateTime + '</td>' +
+												'</tr>');
+										$('#zhutiTable').append(New2);
+									}
+								}
+							}
+						}
+					}
+				});
+			})
+		});
 
+		function  publicajax(Jump,display,){
+			$.ajax({
+				type: "GET",//方法类型
+				url: "/user/Ncoronavirus" ,//url
+				dataType: "json",
+				success: function (data) {
+					for(var i=0;i<data.data.areaTree.length;i++){
+						var obj = data.data.areaTree[i];
+						if (obj.id==0){
+							var newpage=(Jump-1)*display;
+							var new2page=Jump*display-1;
+							if(newpage<obj.children.length){
+								$('#trlist').parent().empty();
+								for (var t=newpage;t<=new2page;t++){
+									if (t<obj.children.length) { //因为长度计算是从1开始，下标从0开始。34的长度下标到33
+										var New2 = $('<tr id="trlist" class="text-c">' +
+												'<td style=\'display:none\'>'+ t +'</td>'+
+												'<td>' + obj.children[t].name + '</td>' +
+												'<td>' + obj.children[t].today.confirm + '</td>' +
+												'<td>' + obj.children[t].today.dead + '</td>' +
+												'<td>' + obj.children[t].today.heal + '</td>' +
+												'<td>' + obj.children[t].total.confirm + '</td>' +
+												'<td>' + obj.children[t].total.dead + '</td>' +
+												'<td>' + obj.children[t].total.heal + '</td>' +
+												'<td>' + obj.children[t].lastUpdateTime + '</td>' +
+												'</tr>');
+										$('#zhutiTable').append(New2);
+									}
+								}
+							}
+
+						}
+					}
+				}
+			});
+		}
 		/*管理员-角色-添加*/
 		function admin_role_add(title,url,w,h){
 			layer_show(title,url,w,h);
