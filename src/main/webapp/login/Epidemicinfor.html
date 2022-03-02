@@ -1,0 +1,267 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<!--[if lt IE 9]>
+	<script type="text/javascript" src="lib/html5shiv.js"></script>
+	<script type="text/javascript" src="lib/respond.min.js"></script>
+	<![endif]-->
+	<link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
+	<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
+	<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+	<link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
+	<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+	<!--[if IE 6]>
+	<script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+	<script>DD_belatedPNG.fix('*');</script>
+	<![endif]-->
+	<title>疫情资讯</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 疫情资讯管理 <span class="c-gray en">&gt;</span> 疫情资讯 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+	<div class="page-container">
+
+		<div class="text-c">
+			<select id="province" class="input-text Wdate" style="width:120px;" >
+				<option value="-1">-请选择-</option>
+			</select>
+			<select class="input-text Wdate" style="width:180px;" id="city">
+				<option value="-1" id="fdef">-请选择-</option>
+			</select>
+			<button type="submit" class="btn btn-success radius" id="query" name="query"><i class="Hui-iconfont">&#xe665;</i>地区搜索</button>
+		</div>
+
+		<div class="dataTables_length" id="table-hover_length">
+			<label>显示
+				<select name="table-hover_length" id="strip" aria-controls="table-hover" class="">
+					<option value="10">10</option><option value="25">25</option>
+					<option value="50">50</option><option value="100">100</option>
+				</select> 条
+			</label>
+		</div>
+
+		<div class="cl pd-5 bg-1 bk-gray mt-20"><span>默认：国内各省/直辖市疫情资讯</span> <span class="r">共有数据：<strong id="count"></strong> 条</span> </div>
+		<table id="table-hover" class="table table-border table-bordered table-hover table-bg">
+			<thead>
+			<!--<tr>
+				<th scope="col" colspan="12">感染警告</th>
+			</tr>-->
+			<tr class="text-c">
+				<th width="140">地区</th>
+				<th width="70">今日确诊</th>
+				<th width="100">今日死亡</th>
+				<th width="70">今日康复</th>
+				<th width="70">总确诊</th>
+				<th width="70">总死亡</th>
+				<th width="70">总康复</th>
+				<th width="150">更新时间</th>
+			</tr>
+			</thead>
+			<tbody id="zhutiTable">
+
+			</tbody>
+
+		</table>
+	<!--	<div class="dataTables_info" id="table-hover_info" role="status" aria-live="polite">显示 0 到 0 条，共 0 条</div>-->
+		<div class="dataTables_paginate paging_simple_numbers" id="table-hover_paginate">
+			<a class="paginate_button previous disabled" aria-controls="table-hover" data-dt-idx="0" tabindex="0" id="table-hover_previous">上一页</a>
+			<span></span>
+			<a class="paginate_button next disabled" aria-controls="table-hover" data-dt-idx="1" tabindex="0" id="table-hover_next">下一页</a>
+		</div>
+		<!--<table>
+			<tr>
+				<td>显示条数</td>
+				<td>上一页</td>
+				<td>下一页</td>
+			</tr>
+		</table>-->
+
+	</div>
+	<!--_footer 作为公共模版分离出去-->
+	<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+	<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
+	<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+
+	<!--请在下方写此页面业务相关的脚本-->
+	<script type="text/javascript" src="lib/datatables/1.10.15/jquery.dataTables.min.js"></script>
+	<script type="text/javascript">
+		// 省/直辖市
+		$(function(){
+			var strip=$('#strip').val();
+			alert(strip);
+			$.ajax({
+				type: "GET",//方法类型
+				url: "/user/Ncoronavirus" ,//url
+				dataType: "json",
+				success: function (data) {
+					$('#pid').text("疫情数据上次更新时间："+data.data.lastUpdateTime )
+					for(var i=0;i<data.data.areaTree.length;i++){
+						var obj = data.data.areaTree[i];
+						if (obj.id==0){
+							console.log(obj.children.length);
+							alert(obj.children.length/strip);
+							for (var t=0;t<obj.children.length;t++){
+								var New=$('<option value="'+t+'">'+obj.children[t].name+'</option>');
+								$('#province').append(New);
+								var New2=$('<tr id="trlist" class="text-c">'+
+										'<td>'+obj.children[t].name+'</td>'+
+										'<td>'+obj.children[t].today.confirm+'</td>'+
+										'<td>'+obj.children[t].today.dead+'</td>'+
+										'<td>'+obj.children[t].today.heal+'</td>'+
+										'<td>'+obj.children[t].total.confirm+'</td>'+
+										'<td>'+obj.children[t].total.dead+'</td>'+
+										'<td>'+obj.children[t].total.heal+'</td>'+
+										'<td>'+obj.children[t].lastUpdateTime+'</td>'+
+										'</tr>');
+								$('#zhutiTable').append(New2);
+
+							}
+						}
+					}
+				}
+			})
+			//市/区
+			$("#province").change(function () {
+				var provid=$('#province').val(); //获取第一下拉框选中值
+				$("#province option[value='-1']").remove();//删除第一个下拉框中的默认选择
+				$("#city option").not('option:first').remove();//清空除第一个选项的所有元素
+				/*$("#city option:gt(0)").remove();*/
+				$("#fdef").text("-所有-"); //修改第一选项为所有
+				$.ajax({
+					type: "GET",//方法类型
+					url: "/user/Ncoronavirus" ,//url
+					dataType: "json",
+					success: function (data) {
+						for(var i=0;i<data.data.areaTree.length;i++){
+							var obj = data.data.areaTree[i];
+							if (obj.id==0){
+								var obj2=obj.children[provid];
+								for (var t=0;t<obj2.children.length;t++){
+									var New=$('<option value="'+t+'">'+obj2.children[t].name+'</option>');
+									$('#city').append(New);
+								}
+							}
+						}
+					}
+				})
+			})
+		});
+		//查询按钮触发事件
+		$(function(){
+			$('#query').click(function() {
+				var provid=$('#province').val();//获取第一下拉框选中值
+				var city=$('#city').val();			// 获取第二下拉框选中值
+				if (provid=="-1" && city=="-1"){
+					location.replace(location.href)
+				}
+				$('#trlist').parent().empty();
+				$.ajax({
+					type: "GET",//方法类型
+					url: "/user/Ncoronavirus" ,//url
+					dataType: "json",
+					success: function (data) {
+						for(var i=0;i<data.data.areaTree.length;i++){
+							var obj = data.data.areaTree[i];
+							if (obj.id==0){ //拿到中国
+								if (city=="-1"){
+									var obj2=obj.children[provid];
+									for (var t=0;t<obj2.children.length; t++){
+										var obj3=obj2.children[t];
+										if (obj3.today.dead==null){
+											obj3.today.dead="暂无数据";
+										}
+										if (obj3.today.heal==null){
+											obj3.today.heal="暂无数据";
+										}
+										var Neww=$('<tr id="trlist" class="text-c">'+
+												'<td>'+obj3.name+'</td>'+
+												'<td>'+obj3.today.confirm+'</td>'+
+												'<td>'+obj3.today.dead+'</td>'+
+												'<td>'+obj3.today.heal+'</td>'+
+												'<td>'+obj3.total.confirm+'</td>'+
+												'<td>'+obj3.total.dead+'</td>'+
+												'<td>'+obj3.total.heal+'</td>'+
+												'<td>'+obj3.lastUpdateTime+'</td>'+
+												'</tr>');
+										$('#zhutiTable').append(Neww);
+									}
+								}else {
+									var obj2=obj.children[provid]; //拿到指定省
+									var obj3=obj2.children[city]; //根据省拿到指定市区
+									if (obj3.today.dead==null){
+										obj3.today.dead="暂无数据";
+									}
+									if (obj3.today.heal==null){
+										obj3.today.heal="暂无数据";
+									}
+									var Neww=$('<tr id="trlist" class="text-c">'+
+											'<td>'+obj3.name+'</td>'+
+											'<td>'+obj3.today.confirm+'</td>'+
+											'<td>'+obj3.today.dead+'</td>'+
+											'<td>'+obj3.today.heal+'</td>'+
+											'<td>'+obj3.total.confirm+'</td>'+
+											'<td>'+obj3.total.dead+'</td>'+
+											'<td>'+obj3.total.heal+'</td>'+
+											'<td>'+obj3.lastUpdateTime+'</td>'+
+											'</tr>');
+									$('#zhutiTable').append(Neww);
+
+								}
+
+							}
+						}
+					}
+				})
+			})
+		});
+
+		/*管理员-角色-添加*/
+		function admin_role_add(title,url,w,h){
+			layer_show(title,url,w,h);
+		}
+		/*管理员-角色-编辑*/
+		function admin_role_edit(title,url,id,w,h){
+			layer_show(title,url,w,h);
+		}
+		/*管理员-角色-取消警告*/
+		function admin_role_del(obj,id){
+			var parentTR =obj.parentNode.parentNode;
+			var firstTd_value = $(parentTR).children('td').eq(1).text();
+			console.log(firstTd_value);
+			layer.confirm('取消警告须谨慎，确认要取消吗？',function(index){
+				$.ajax({
+					type: 'POST',
+					url: '/Healthdaily/relieveWarning',
+					data:"id="+firstTd_value,
+					dataType: "json",
+					success: function(data){
+						$(obj).parents("tr").remove();
+						layer.msg('已取消警告!',{icon:1,time:1000});
+					},
+					error:function(data) {
+						console.log(data.msg);
+					},
+				});
+			});
+		}
+/*		$(function() {
+			$('#table-hover').dataTable({
+				"aaSorting": [[1, "desc"]],//默认第几个排序
+				"bStateSave": true,//状态保存
+				"aoColumnDefs": [
+					{"bVisible": false, "aTargets": [ 3 ]} ,//控制列的隐藏显示
+					{"orderable": false, "aTargets": [0, 8, 9]}// 制定列不参与排序
+				]
+			});
+		});*/
+
+	</script>
+</div>
+</body>
+</html>
