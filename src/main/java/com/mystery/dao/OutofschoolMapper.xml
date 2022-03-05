@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mystery.dao.OutofschoolMapper">
+    <select id="getall" parameterType="String" resultType="com.mystery.entity.Outofschool">
+        SELECT
+        u.id,
+        u.number,
+        u.leavecontent,
+        u.leavetime,
+        u.approval,
+        c.photo
+        FROM
+        outofschool u
+        LEFT OUTER JOIN `user` c ON u.number = c.numberl where 1 = 1
+        <if test="number != null and number !=''">
+            and  u.number=#{number}
+        </if>
+    </select>
+
+</mapper>

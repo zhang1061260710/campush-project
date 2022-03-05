@@ -31,7 +31,7 @@
 		<input type="text" class="input-text" style="width:250px" placeholder="输入学号进行查询...." id="querycontent" name="querycontent">
 		<button type="submit" class="btn btn-success radius" id="query" name="query"><i class="Hui-iconfont">&#xe665;</i> 搜日报</button>
 	</div>
-	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="member_add('添加日报','member-add.html','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加日报</a></span> <span class="r">共有数据：<strong id="count"></strong> 条</span> </div>
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <!--<a href="javascript:;" onclick="member_add('添加日报','member-add.html','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加日报</a>--></span> <span class="r">共有数据：<strong id="count"></strong> 条</span> </div>
 	<div class="mt-20">
 	<table class="table table-border table-bordered table-hover table-bg table-sort">
 		<thead>
@@ -46,7 +46,7 @@
 				<th width="100">有无异常</th>
 				<th width="80">是否确诊</th>
 				<th width="100">高风险地区</th>
-				<th width="100">来源地址</th>
+				<th width="100">提交地址</th>
 				<th width="130">上报时间</th>
 			<!--<th width="70">是否警告</th>-->
 				<th width="150">操作</th>
