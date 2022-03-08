@@ -23,13 +23,12 @@
 </head>
 <body>
 <div class="cl pd-20" style=" background-color:#5bacb6">
-	<img class="avatar size-XL l" src="static/h-ui/images/ucnter/avatar-default.jpg">
+	<img class="avatar size-XL l" id="userimg" src="">
 	<dl style="margin-left:80px; color:#fff">
 		<dt>
-			<span class="f-18">张三</span>
-			<span class="pl-10 f-12">余额：40</span>
+			<span class="f-18" id="username"></span>
 		</dt>
-		<dd class="pt-10 f-12" style="margin-left:0">这家伙很懒，什么也没有留下</dd>
+		<!--<dd class="pt-10 f-12" style="margin-left:0">这家伙很懒，什么也没有留下</dd>-->
 	</dl>
 </div>
 <div class="pd-20">
@@ -37,27 +36,24 @@
 		<tbody>
 			<tr>
 				<th class="text-r" width="80">性别：</th>
-				<td>男</td>
+				<td id="gender"></td>
 			</tr>
 			<tr>
 				<th class="text-r">手机：</th>
-				<td>13000000000</td>
+				<td id="contactnumber"></td>
 			</tr>
 			<tr>
 				<th class="text-r">邮箱：</th>
-				<td>admin@mail.com</td>
+				<td id="mail"></td>
 			</tr>
 			<tr>
-				<th class="text-r">地址：</th>
-				<td>北京市 海淀区</td>
+				<th class="text-r">班级：</th>
+				<td id="classnumber"></td>
 			</tr>
+
 			<tr>
-				<th class="text-r">注册时间：</th>
-				<td>2014.12.20</td>
-			</tr>
-			<tr>
-				<th class="text-r">积分：</th>
-				<td>330</td>
+				<th class="text-r">用户专业：</th>
+				<td id="speciality"></td>
 			</tr>
 		</tbody>
 	</table>
@@ -66,7 +62,12 @@
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
 <script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
-<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script> 
+<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script>
+<script type="text/javascript">
+	var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+/*	parent.layer.title('新标题。。', index)  //再改变当前层的标题*/
+	console.log(parent.layer.title());
+</script>
 <!--/_footer 作为公共模版分离出去-->
 
 <!--请在下方写此页面业务相关的脚本-->

@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @JSONType(orders={"id","number","photo","leavecontent","leavetime","approval"})
 public class Outofschool {
     private int id;               //ID
-    private int number;           //学号
+    private String number;           //学号
     private  String photo;        //用户头像
     private String leavecontent;  //申请内容
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
@@ -21,7 +21,7 @@ public class Outofschool {
 
     public Outofschool(){}
 
-    public Outofschool( int number, String leavecontent, Timestamp leavetime, int approval, String photo) {
+    public Outofschool( String number, String leavecontent, Timestamp leavetime, int approval, String photo) {
         this.number = number;
         this.leavecontent = leavecontent;
         this.leavetime = leavetime;
@@ -37,11 +37,11 @@ public class Outofschool {
         this.id = id;
     }
 
-    public int getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 

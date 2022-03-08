@@ -44,4 +44,9 @@ public class UserServcieImpl implements IUserService {
     public void PersonalUpdate(User user) {
         userMapper.PersonalUpdate(user);
     }
+
+    @Override
+    public User NumberQuery(String number) {
+        return userMapper.NumberQuery(number);
+    }
 }

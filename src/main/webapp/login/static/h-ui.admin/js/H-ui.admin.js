@@ -201,7 +201,60 @@ function layer_show(title,url,w,h){
 		maxmin: true,
 		shade:0.4,
 		title: title,
-		content: url
+		content: url,
+
+	});
+}
+
+function layer_show1(title,url,w,h){
+	if (title == null || title == '') {
+		title=false;
+	};
+	if (url == null || url == '') {
+		url="404.html";
+	};
+	if (w == null || w == '') {
+		w=800;
+	};
+	if (h == null || h == '') {
+		h=($(window).height() - 50);
+	};
+	layer.open({
+		type: 2,
+		area: [w+'px', h +'px'],
+		fix: false, //不固定
+		maxmin: true,
+		shade:0.4,
+		title: false,
+		content: url,
+		success: function(layero, index){
+			var body=layer.getChildFrame('body',index);//少了这个是不能从父页面向子页面传值的
+			//获取子页面的元素，进行数据渲染
+			$.ajax({
+				//几个参数需要注意一下
+				type: "POST",//方法类型
+				url: "/user/NumberQuery" ,//url
+				data: "number="+title,
+				//设置请求参数为json字符串,编码为UTF-8
+				/*contentType:"test/html;charset=utf-8",*/
+				/*contentType:"application/json;charset=utf-8",*/
+				datatype: "json",//预期服务器返回的数据类型
+				success: function (data) {
+					if (data.gender==0){
+						data.gender="男"
+					}else {
+						data.gender="女"
+					}
+					body.contents().find("#username").text(data.fullname);
+					body.contents().find("#gender").text(data.gender);
+					body.contents().find("#contactnumber").text(data.contactnumber);
+					body.contents().find("#mail").text(data.mail);
+					body.contents().find("#classnumber").text(data.classnumber);
+					body.contents().find("#speciality").text(data.speciality);
+					body.contents().find("#userimg").attr("src","../tmpFiles/"+data.photo);
+				}
+			});
+		},
 	});
 }
 /*关闭弹出框口*/

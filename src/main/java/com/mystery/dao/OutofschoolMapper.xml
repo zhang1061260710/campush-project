@@ -17,5 +17,13 @@
             and  u.number=#{number}
         </if>
     </select>
+    <update id="UpdateApproval" parameterType="String" >
+        UPDATE outofschool SET approval=#{whether}
+        WHERE number=#{number}
+    </update>
+    <insert id="SaveAdd" parameterType="com.mystery.entity.Outofschool">
+        insert into outofschool (number,leavecontent,leavetime,approval)
+        values (#{number},#{leavecontent},#{leavetime},0)
+    </insert>
 
 </mapper>

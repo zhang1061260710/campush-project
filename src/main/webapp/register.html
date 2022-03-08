@@ -46,14 +46,14 @@
                             //设置请求参数为json字符串,编码为UTF-8
                            /* contentType:"application/json;charset=utf-8",*/
                             async: false,
-                            dataType: "text",//预期服务器返回的数据类型
+                            dataType: "json",//预期服务器返回的数据类型
                             success: function (data) {
-                               if (data = 200){
-                                   setTimeout(function () {
-                                       show_msg('恭喜注册成功咯！  正在为您跳转...','login/index.html');
-                                   }, 2000);
-                                }else{
-                                    show_err_msg('注册失败!');
+                                if (data.code==1){
+                                    setTimeout(function () {
+                                        show_msg('恭喜注册成功咯！  正在为您跳转...','login/index1.html');
+                                    }, 1000);
+                                }else {
+                                    show_err_msg('注册失败,注册出现错误，请通知管理员！');
                                 }
                             },
                             error : function() {
@@ -113,6 +113,10 @@ background: -webkit-gradient(linear, center top, center bottom, from(#B4784C), t
             	<td colspan="2" class="thead">后台用户注册</td>
             </thead>
             <tbody>
+                  <tr>
+                <th><em class="red">*</em> 学号：</th>
+                <td><input type="input" value="" name="number" class="number ipt"></td>
+                  </tr>
                 <tr>
                   <th><em class="red">*</em> 用户名：</th>
                   <td><input type="input" value="" name="username" class="username ipt"> <span class="tooltip">(说明) <span>*表示必填哦。用户名：必须为小写英文且长度为24</span></span></td>

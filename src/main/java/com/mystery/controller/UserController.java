@@ -43,8 +43,9 @@ public class UserController {
        try{
            int count =userServcie.getName(UserName);
            if (count ==1){
+             User user=userServcie.GetUserList(UserName);
 //              resp.getWriter().print(JSONUtils.toJSONString(Response.OK(null)));
-              return Response.OK(count);
+              return Response.OK(user);
           }else {
 //              JSONUtils.toJSONString(new Response(0,"failed",null));
 //              System.out.println(new Response(0,"failed",null).toString());
@@ -65,13 +66,15 @@ public class UserController {
        //用户注册
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public Response register(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+      String number= req.getParameter("number");
+      System.out.println(number);
       String username= req.getParameter("username");
       String password=  req.getParameter("password");
       String role=  req.getParameter("role");
       HttpSession session = req.getSession();
       session.setAttribute("data", username);
       int role2 = Integer.parseInt(role);
-      User user = new User(username,password,role2);
+      User user = new User(number,username,password,role2);
       try {
          userServcie.save(user);
          return Response.OK(null);
@@ -239,7 +242,13 @@ public class UserController {
         session.removeAttribute("data");
         return Response.OK("ok");
     }
-
+    //根据学号查询个人信息
+    @RequestMapping(value="/NumberQuery", method = RequestMethod.POST)
+    public User NumberQuery(@RequestParam("number") String number){
+        User user= userServcie.NumberQuery(number);
+        System.out.println(user);
+        return user;
+    }
     @RequestMapping(value="/hello")
     public ModelAndView Hello(){
         return new ModelAndView("/index");

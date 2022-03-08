@@ -32,7 +32,7 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>学号：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="" placeholder="" id="numberl" name="articletitle">
+				<input disabled="disabled" style="border:0;" type="text" class="input-text" value="" placeholder="" id="numberl" name="articletitle">
 			</div>
 		</div>
 		<div class="row cl">
@@ -152,6 +152,14 @@
 <style type="text/css">
 	#imgg{margin-left: 270px;}
 	#position{margin-left: 290px;}
+</style>
+<style type="text/css">
+	input:disabled, textarea:disabled{
+		color:#333333;
+		background: white;
+		opacity: 1;
+		-webkit-text-fill-color: #333333;
+	}
 </style>
 <script type="text/javascript">
 	function article_save_submit() {

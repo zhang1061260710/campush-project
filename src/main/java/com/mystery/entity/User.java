@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @JSONType(orders={"id","numberl","username","gender","college","speciality","classnumber","contactnumber","mail","photo","password","role","fullname"})
 public class User {
     private Integer id;   //用户默认自增ID
-    private Integer numberl;    //用户学号
+    private String numberl;    //用户学号
     private String username;    //用户名
     private Integer gender;     //用户性别
     private String college;     //用户学院
@@ -25,7 +25,8 @@ public class User {
 
     }
 
-    public User( String username, String password, Integer role) {
+    public User( String numberl,String username, String password, Integer role) {
+        this.numberl=numberl;
         this.username = username;
         this.password = password;
         this.role = role;
@@ -59,11 +60,11 @@ public class User {
         this.id = id;
     }
 
-    public Integer getNumberl() {
+    public String getNumberl() {
         return numberl;
     }
 
-    public void setNumberl(Integer numberl) {
+    public void setNumberl(String numberl) {
         this.numberl = numberl;
     }
 

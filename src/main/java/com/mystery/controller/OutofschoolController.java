@@ -4,13 +4,14 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializeFilter;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.mystery.entity.Outofschool;
+import com.mystery.entity.Response;
 import com.mystery.service.IOutofschoolService;
-import com.mystery.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -18,15 +19,29 @@ import java.util.List;
 public class OutofschoolController {
     @Autowired
     private IOutofschoolService outofschoolService;
-    @Autowired
-    private IUserService userService;
-
-    @RequestMapping(value="/getall",method = RequestMethod.GET)
-    public String getall(){
-        List<Outofschool> getall = outofschoolService.getall(null);
+    @RequestMapping(value="/getall",method = RequestMethod.GET,produces = {"text/html;charset=utf-8"})
+    public String getall(@RequestParam("number")String number){
+        List<Outofschool> getall = outofschoolService.getall(number);
         SerializeFilter scriptArrayFilter = null;
         String jsonStr = JSONObject.toJSONString(getall,new SerializeFilter[]{scriptArrayFilter}, SerializerFeature.WriteMapNullValue);
-        System.out.println(jsonStr);
         return jsonStr;
+    }
+    @RequestMapping(value="/UpdateApproval",method = RequestMethod.POST,produces = {"application/json;charset=utf-8"})
+    public Response UpdateApproval(@RequestParam("number")String number,@RequestParam("whether") String whether){
+        outofschoolService.UpdateApproval(number,whether);
+        return Response.OK(number);
+    }
+    @RequestMapping(value = "/SaveAdd",method = RequestMethod.POST,produces = {"application/json;charset=utf-8"})
+    public Response SaveAdd(@RequestBody Outofschool outofschool){
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //时间格式
+        String date= df.format(new Date());     //获取当前时间
+        outofschool.setLeavetime(Timestamp.valueOf(date));
+        List <Outofschool> judge= outofschoolService.getall(String.valueOf(outofschool.getNumber()));
+        if (judge.size() ==0){
+            outofschoolService.SaveAdd(outofschool);
+            return Response.OK(outofschool);
+        }else {
+            return Response.Error();
+        }
     }
 }

@@ -10,8 +10,8 @@
         SELECT count(*)  FROM user WHERE username=#{name}
     </select>
     <insert id="save" parameterType="com.mystery.entity.User" >
-        insert into user (username,password,role)
-        values (#{username},#{password},#{role})
+        insert into user (numberl,username,password,role)
+        values (#{numberl},#{username},#{password},#{role})
     </insert>
     <select id="GetUserList" parameterType="string" resultType="com.mystery.entity.User">
         SELECT * FROM user WHERE username=#{name}
@@ -23,4 +23,7 @@
         UPDATE user SET numberl=#{numberl},fullname=#{fullname},gender=#{gender},speciality=#{speciality},classnumber=#{classnumber},contactnumber=#{contactnumber},mail=#{mail},college=#{college},photo=#{photo}
         WHERE username=#{username}
     </update>
+    <select id="NumberQuery" parameterType="String" resultType="com.mystery.entity.User">
+        select * from user where numberl=#{number}
+    </select>
 </mapper>

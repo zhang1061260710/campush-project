@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 @JSONType(orders={"id","numberl","username","contactnumber","dormitory","dormitoryid","abnormal","diagnosis","highrisk","source","time","warning"})
 public class Healthdaily {
     private int id;    //id
-    private int numberl;    //用户学号
+    private String numberl;    //用户学号
     private String username;    //姓名
     private Long contactnumber;    //联系方式，手机号
     private String dormitory;    //宿舍楼层
@@ -39,7 +39,7 @@ public class Healthdaily {
     }
 
     public Healthdaily(){}
-    public Healthdaily( int numberl, String username, Long contactnumber, String dormitory, int dormitoryid, int abnormal, int diagnosis, int highrisk, String source, Timestamp time, int warning) {
+    public Healthdaily( String numberl, String username, Long contactnumber, String dormitory, int dormitoryid, int abnormal, int diagnosis, int highrisk, String source, Timestamp time, int warning) {
         this.numberl = numberl;
         this.username = username;
         this.contactnumber = contactnumber;
@@ -61,11 +61,11 @@ public class Healthdaily {
         this.id = id;
     }
 
-    public int getNumberl() {
+    public String getNumberl() {
         return numberl;
     }
 
-    public void setNumberl(int numberl) {
+    public void setNumberl(String numberl) {
         this.numberl = numberl;
     }
 

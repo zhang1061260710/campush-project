@@ -6,4 +6,9 @@ import java.util.List;
 
 public interface IOutofschoolService {
     List<Outofschool> getall (String number);
+
+    //出校审核
+    void UpdateApproval(String number,String whether);
+
+    void  SaveAdd(Outofschool outofschool);
 }

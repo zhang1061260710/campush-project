@@ -20,5 +20,6 @@ public interface UserMapper {
     List<User> AllUserList();
 
     void PersonalUpdate(User user);
-
+    //根据学号查询信息
+    User NumberQuery(String number);
 }

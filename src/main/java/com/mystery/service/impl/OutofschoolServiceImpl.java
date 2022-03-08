@@ -18,4 +18,14 @@ public class OutofschoolServiceImpl implements IOutofschoolService {
     public List<Outofschool> getall(String number) {
         return outofschoolMapper.getall(number);
     }
+
+    @Override
+    public void UpdateApproval(String number,String whether) {
+        outofschoolMapper.UpdateApproval(number,whether);
+    }
+
+    @Override
+    public void SaveAdd(Outofschool outofschool) {
+        outofschoolMapper.SaveAdd(outofschool);
+    }
 }
