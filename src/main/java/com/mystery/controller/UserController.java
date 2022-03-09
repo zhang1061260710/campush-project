@@ -35,6 +35,7 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Response login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String UserName= req.getParameter("username");
+        String password = req.getParameter("password");
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
         HttpSession session = req.getSession();
@@ -43,9 +44,14 @@ public class UserController {
        try{
            int count =userServcie.getName(UserName);
            if (count ==1){
-             User user=userServcie.GetUserList(UserName);
+                  User user=userServcie.GetUserList(UserName);
+               if (password.equals(user.getPassword())){
+                   return Response.OK(user);
+               }else {
+                   return Response.Error();
+               }
 //              resp.getWriter().print(JSONUtils.toJSONString(Response.OK(null)));
-              return Response.OK(user);
+
           }else {
 //              JSONUtils.toJSONString(new Response(0,"failed",null));
 //              System.out.println(new Response(0,"failed",null).toString());

@@ -39,4 +39,8 @@
         UPDATE healthdaily SET warning=0
         WHERE id=#{id}
     </update>
+
+    <select id="UserWarning" parameterType="String" resultType="com.mystery.entity.Healthdaily">
+        select * from healthdaily WHERE numberl=#{number} and warning=1
+    </select>
 </mapper>

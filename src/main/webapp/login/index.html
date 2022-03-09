@@ -28,7 +28,7 @@
 <body>
 <header class="navbar-wrapper">
 	<div class="navbar navbar-fixed-top">
-		<div class="container-fluid cl"> <a class="logo navbar-logo f-l mr-10 hidden-xs" href="/login/index.html">后台管理</a>
+		<div class="container-fluid cl"> <a class="logo navbar-logo f-l mr-10 hidden-xs" href="#">后台管理</a>
 			<span class="logo navbar-slogan f-l mr-10 hidden-xs">晋中学院</span>
 			<a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;">&#xe667;</a>
 			<nav class="nav navbar-nav">
@@ -80,7 +80,6 @@
 				<ul>
 					<li><a data-href="picture-list.html" data-title="学生管理" href="javascript:void(0)">学生管理</a></li>
 					<li><a data-href="out-school.html" data-title="出校申请" href="javascript:void(0)">出校申请</a></li>
-					<li><a data-href="leave.html" data-title="请假申请" href="javascript:void(0)">请假申请</a></li>
 			</ul>
 		</dd>
 	</dl>
@@ -132,30 +131,10 @@
 			<dd>
 				<ul>
 					<li><a data-href="Epidemicinfor.html" data-title="疫情资讯" href="javascript:void(0)">疫情资讯</a></li>
-					<li><a data-href="charts-1.html" data-title="折线图" href="javascript:void(0)">折线图</a></li>
-					<li><a data-href="charts-2.html" data-title="时间轴折线图" href="javascript:void(0)">时间轴折线图</a></li>
-					<li><a data-href="charts-3.html" data-title="区域图" href="javascript:void(0)">区域图</a></li>
-					<li><a data-href="charts-4.html" data-title="柱状图" href="javascript:void(0)">柱状图</a></li>
-					<li><a data-href="charts-5.html" data-title="饼状图" href="javascript:void(0)">饼状图</a></li>
-					<li><a data-href="charts-6.html" data-title="3D柱状图" href="javascript:void(0)">3D柱状图</a></li>
-					<li><a data-href="charts-7.html" data-title="3D饼状图" href="javascript:void(0)">3D饼状图</a></li>
 			</ul>
 		</dd>
 	</dl>
-		<dl id="menu-system">
-<!--
-			<dt><i class="Hui-iconfont">&#xe62e;</i> 系统管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
--->
-			<dd>
-				<ul>
-					<li><a data-href="system-base.html" data-title="系统设置" href="javascript:void(0)">系统设置</a></li>
-					<li><a data-href="system-category.html" data-title="栏目管理" href="javascript:void(0)">栏目管理</a></li>
-					<li><a data-href="system-data.html" data-title="数据字典" href="javascript:void(0)">数据字典</a></li>
-					<li><a data-href="system-shielding.html" data-title="屏蔽词" href="javascript:void(0)">屏蔽词</a></li>
-					<li><a data-href="system-log.html" data-title="系统日志" href="javascript:void(0)">系统日志</a></li>
-			</ul>
-		</dd>
-	</dl>
+
 </div>
 </aside>
 <div class="dislpayArrow hidden-xs"><a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a></div>
@@ -205,7 +184,8 @@
 					if (data.data.role==0){
 						$('#role-li').append("超级管理员");
 					}else if (data.data.role==2){
-						$('#role-li').append("学生")
+						$('#role-li').append("学生");
+						window.location.href="index1.html";
 					}
 				}else {
 					$('#User').append(data.data.fullname);
@@ -213,6 +193,7 @@
 						$('#role-li').append("超级管理员");
 					}else if (data.data.role==2){
 						$('#role-li').append("学生")
+						window.location.href="index1.html";
 					}
 				}
 			}else if (data.code == 0 ){

@@ -32,7 +32,7 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>学号：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="" placeholder="" id="numberl" name="numberl">
+				<input disabled="disabled" style="border:0;" type="text" class="input-text" value="" placeholder="" id="numberl" name="numberl">
 			</div>
 		</div>
 		<div class="row cl">
@@ -113,7 +113,7 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>提交地址：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="" placeholder="" id="source" name="source">
+				<input disabled="disabled" style="border:0;" type="text" class="input-text" value="" placeholder="" id="source" name="source">
 			</div>
 		</div>
 		<div class="row cl">
@@ -135,7 +135,48 @@
 <script type="text/javascript" src="lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
 <script type="text/javascript" src="lib/jquery.validation/1.14.0/validate-methods.js"></script> 
 <script type="text/javascript" src="lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<style type="text/css">
+	input:disabled, textarea:disabled{
+		color:#333333;
+		background: white;
+		opacity: 1;
+		-webkit-text-fill-color: #333333;
+	}
+</style>
 <script type="text/javascript">
+	$(function() {
+		$.ajax({
+			type: "get",//接口规定，只能用get
+			async: true,//异步
+			url: "https://apis.map.qq.com/ws/location/v1/ip",//接口地址
+			data: {"key":"XN6BZ-PNBWP-474DO-LWJJP-3TV7H-UAFUJ","output":"jsonp"},//参数格式必须用到output传参为jsonp，否则会报跨域问题
+			dataType: "jsonp",//跨域，必须用到jsonp
+			success: function(result){
+				if (result.result.ad_info.province==result.result.ad_info.city){
+					console.log(result.result.ad_info.city+"-"+result.result.ad_info.district);
+					$('#source').append().val(result.result.ad_info.city+result.result.ad_info.district);
+				}else {
+					console.log(result.result.ad_info.province+"-"+result.result.ad_info.city+"-"+result.result.ad_info.district);
+					$('#source').append().val(result.result.ad_info.province+result.result.ad_info.city+result.result.ad_info.district)
+				}
+			},
+			error: function (XMLHttpRequest,textStatus,errorThrown){
+				console.log(JSON.stringify(XMLHttpRequest));
+			}
+		});
+		$.ajax({
+			//几个参数需要注意一下
+			async: true, //异步，也是默认的异步
+			type: "GET",//方法类型
+			url: "/user/getuserlist",//url
+			datatype: "json",//预期服务器返回的数据类型
+			success: function (data) {
+				$('#numberl').val(data.data.numberl);
+				console.log(data);
+
+			}
+		})
+	});
 	function add() {
 		var numberl = $('#numberl').val();
 		var username = $('#username').val();

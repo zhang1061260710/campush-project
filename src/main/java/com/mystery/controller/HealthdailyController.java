@@ -77,6 +77,13 @@ public class HealthdailyController {
         String jsonStr = JSONObject.toJSONString(AllUser,new SerializeFilter[]{scriptArrayFilter}, SerializerFeature.WriteMapNullValue);
         return jsonStr;
     }
+    @RequestMapping(value = "/UserWarning",method = RequestMethod.POST,produces = {"application/json;charset=utf-8"})
+    public  String UserWarning(@RequestParam("number")String number){
+        List <Healthdaily> WaringUser=iHealthdailyService.UserWarning(number);
+        SerializeFilter scriptArrayFilter = null;
+        String jsonStr = JSONObject.toJSONString(WaringUser,new SerializeFilter[]{scriptArrayFilter}, SerializerFeature.WriteMapNullValue);
+        return jsonStr;
+    }
     @RequestMapping(value = "/relieveWarning", method = RequestMethod.POST)
     public  Response  relieveWarning(@RequestParam("id")String id){
         iHealthdailyService.deleWarning(Integer.valueOf(id));

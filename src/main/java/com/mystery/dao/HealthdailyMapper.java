@@ -23,4 +23,6 @@ public interface HealthdailyMapper {
     List <Healthdaily> AllWarning(@Param("warning")String warning);
 
     void  deleWarning(@Param("id")int id);
+
+    List<Healthdaily> UserWarning(@Param("number") String number);
 }

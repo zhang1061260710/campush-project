@@ -46,4 +46,9 @@ public class HealthdailyServiceImpl implements IHealthdailyService {
     public void deleWarning(int id) {
         healthdailyMapper.deleWarning(id);
     }
+
+    @Override
+    public List<Healthdaily> UserWarning(String number) {
+        return healthdailyMapper.UserWarning(number);
+    }
 }

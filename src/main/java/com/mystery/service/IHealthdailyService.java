@@ -18,4 +18,6 @@ public interface IHealthdailyService {
     List <Healthdaily> AllWarning(String warning);
 
     void deleWarning (int id);
+
+    List<Healthdaily> UserWarning(String number);
 }
