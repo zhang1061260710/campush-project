@@ -1,6 +1,7 @@
 package com.mystery.dao;
 
 import com.mystery.entity.User;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,4 +23,6 @@ public interface UserMapper {
     void PersonalUpdate(User user);
     //根据学号查询信息
     User NumberQuery(String number);
+    //批量删除
+    void  batchDelete (List<Integer> userIds);
 }

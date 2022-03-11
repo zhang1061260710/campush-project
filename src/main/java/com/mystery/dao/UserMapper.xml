@@ -26,4 +26,10 @@
     <select id="NumberQuery" parameterType="String" resultType="com.mystery.entity.User">
         select * from user where numberl=#{number}
     </select>
+    <delete id="batchDelete" parameterType="java.util.List">
+        delete from user where id in
+            <foreach collection="list" item="userIds" open="(" separator="," close=")">
+                #{userIds}
+            </foreach>
+    </delete>
 </mapper>

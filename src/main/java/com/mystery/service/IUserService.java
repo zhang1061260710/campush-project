@@ -24,4 +24,6 @@ public interface IUserService {
     //根据学号查询用户信息
     User NumberQuery(String number);
 
+    void batchDelete(List<Integer> userIds);
+
 }

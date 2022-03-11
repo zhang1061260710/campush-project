@@ -17,6 +17,8 @@ import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -252,8 +254,19 @@ public class UserController {
     @RequestMapping(value="/NumberQuery", method = RequestMethod.POST)
     public User NumberQuery(@RequestParam("number") String number){
         User user= userServcie.NumberQuery(number);
-        System.out.println(user);
         return user;
+    }
+    //批量删除
+    @RequestMapping(value = "/batchDelete",method = RequestMethod.POST)
+    public Response batchDelete(@RequestParam("userIds[]") Integer[] userIds){
+        List<Integer> userIdList = Arrays.asList(userIds);
+        Arrays.stream(userIds);
+        try{
+            userServcie.batchDelete(userIdList);
+        }catch (Exception e){
+            return Response.Error();
+        }
+        return Response.OK(null);
     }
     @RequestMapping(value="/hello")
     public ModelAndView Hello(){

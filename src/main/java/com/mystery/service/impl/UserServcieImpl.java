@@ -49,4 +49,10 @@ public class UserServcieImpl implements IUserService {
     public User NumberQuery(String number) {
         return userMapper.NumberQuery(number);
     }
+
+    @Override
+    public void batchDelete(List<Integer> userIds) {
+
+        userMapper.batchDelete(userIds);
+    }
 }
