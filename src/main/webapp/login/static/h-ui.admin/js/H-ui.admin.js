@@ -206,6 +206,95 @@ function layer_show(title,url,w,h){
 	});
 }
 
+function memberedit(title,data,url,w,h){
+	if (title == null || title == '') {
+		title=false;
+	};
+	if (url == null || url == '') {
+		url="404.html";
+	};
+	if (w == null || w == '') {
+		w=800;
+	};
+	if (h == null || h == '') {
+		h=($(window).height() - 50);
+	};
+	layer.open({
+		type: 2,
+		area: [w+'px', h +'px'],
+		fix: false, //不固定
+		maxmin: true,
+		shade:0.4,
+		title: title,
+		content: url,
+		success: function(layero, index){
+			var body=layer.getChildFrame('body',index);//少了这个是不能从父页面向子页面传值的
+			//获取子页面的元素，进行数据渲染
+			$.ajax({
+				//几个参数需要注意一下
+				type: "POST",//方法类型
+				url: "/Healthdaily/QueryDaily" ,//url
+				data: "id="+data,
+				//设置请求参数为json字符串,编码为UTF-8
+				/*contentType:"test/html;charset=utf-8",*/
+				/*contentType:"application/json;charset=utf-8",*/
+				datatype: "json",//预期服务器返回的数据类型
+				success: function (data) {
+					body.contents().find("#id").val(data.id);
+					body.contents().find("#numberl").val(data.numberl);
+					body.contents().find("#username").val(data.username);
+					body.contents().find("#contactnumber").val(data.contactnumber);
+					body.contents().find("#dormitory").val(data.dormitory);
+					body.contents().find("#dormitoryid").val(data.dormitoryid);
+					body.contents().find("#abnormal-"+data.abnormal).attr("checked",true );
+					body.contents().find("#diagnosis-"+data.diagnosis).attr("checked",true );
+					body.contents().find("#highrisk-"+data.highrisk).attr("checked",true );
+					body.contents().find("#source").val(data.source);
+				}
+			});
+		},
+	});
+}
+
+function editcollege(data,url,w,h){
+	if (url == null || url == '') {
+		url="404.html";
+	};
+	if (w == null || w == '') {
+		w=800;
+	};
+	if (h == null || h == '') {
+		h=($(window).height() - 50);
+	};
+	layer.open({
+		type: 2,
+		area: [w+'px', h +'px'],
+		fix: false, //不固定
+		maxmin: true,
+		shade:0.4,
+		title: "编辑",
+		content: url,
+		success: function(layero, index){
+			var body=layer.getChildFrame('body',index);//少了这个是不能从父页面向子页面传值的
+			//获取子页面的元素，进行数据渲染
+			$.ajax({
+				//几个参数需要注意一下
+				type: "POST",//方法类型
+				url: "/college/IdQuery" ,//url
+				data: "id="+data,
+				//设置请求参数为json字符串,编码为UTF-8
+				/*contentType:"test/html;charset=utf-8",*/
+				/*contentType:"application/json;charset=utf-8",*/
+				datatype: "json",//预期服务器返回的数据类型
+				success: function (data) {
+					body.contents().find("#id").val(data.data.id);
+					body.contents().find("#collegename").val(data.data.name);
+				}
+			});
+		},
+	});
+}
+
 function layer_show1(title,url,w,h){
 	if (title == null || title == '') {
 		title=false;

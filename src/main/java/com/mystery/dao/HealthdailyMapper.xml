@@ -43,4 +43,20 @@
     <select id="UserWarning" parameterType="String" resultType="com.mystery.entity.Healthdaily">
         select * from healthdaily WHERE numberl=#{number} and warning=1
     </select>
+
+    <delete id="BatchDeleById" parameterType="java.util.List">
+        delete from healthdaily where id in
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="QueryById" parameterType="int" resultType="com.mystery.entity.Healthdaily">
+        select * from healthdaily WHERE id=#{id}
+    </select>
+
+    <update id="EditUpdateById" parameterType="com.mystery.entity.Healthdaily">
+        UPDATE healthdaily SET  numberl=#{numberl},username=#{username},contactnumber=#{contactnumber},dormitory=#{dormitory},dormitoryid=#{dormitoryid},abnormal=#{abnormal},diagnosis=#{diagnosis},highrisk=#{highrisk},source=#{source}
+        WHERE id=#{id}
+    </update>
 </mapper>

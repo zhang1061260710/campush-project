@@ -31,7 +31,7 @@
 				<th scope="col" colspan="12">感染警告</th>
 			</tr>
 			<tr class="text-c">
-				<th width="25"><input type="checkbox" value="" name=""></th>
+				<th width="25"><input id="all" type="checkbox" value=""></th>
 				<th style='display:none'>id</th>
 				<th width="40">学号</th>
 				<th width="40">姓名</th>
@@ -61,6 +61,14 @@
 <script type="text/javascript" src="lib/datatables/1.10.15/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
 	$(function(){
+		var flag=false;
+		$('#all').click(function(){
+			flag=!flag;
+			var items=$("input[name='item']");
+			for(var x=0;x<items.length;x++){
+				items[x].checked=flag;
+			}
+		});
 		$.ajax({
 			//几个参数需要注意一下
 			type: "GET",//方法类型

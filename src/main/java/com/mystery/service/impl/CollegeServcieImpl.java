@@ -29,4 +29,19 @@ public class CollegeServcieImpl implements ICollegeService {
     public void save(String name) {
         collegeMapper.save(name);
     }
+
+    @Override
+    public void batchDelete(List<Integer> userIds) {
+        collegeMapper.batchDelete(userIds);
+    }
+
+    @Override
+    public College queryById(int id) {
+        return collegeMapper.queryById(id);
+    }
+
+    @Override
+    public void UpdataByCollegeName(College college) {
+        collegeMapper.UpdataByCollegeName(college);
+    }
 }

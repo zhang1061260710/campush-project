@@ -24,7 +24,7 @@
 <![endif]-->
 <!--/meta 作为公共模版分离出去-->
 
-<title>添加学院 </title>
+<title>添加学院</title>
 
 </head>
 <body>
@@ -60,68 +60,75 @@
 	$(function(){
 	  $('#Submit').click(function() {
 		 var name= $('#collegename').val()
-		$.ajax({
-			//几个参数需要注意一下
-			type: "POST",//方法类型
-			url: "/college/save" ,//url
-			data: 'name='+name,
-			/*data:JSON.stringify({"username":name,"password":password}),*/
-			//设置请求参数为json字符串,编码为UTF-8
-			/*contentType:"test/html;charset=utf-8",*/
-			datatype: "text",//预期服务器返回的数据类型
-			success: function (data) {
-				if(data=="ok") {
-					alert("添加成功")
-					location.replace(document.referrer);
-				}
-			},
-			error : function() {
-				alert(data)
-			}
-		});
+		  if (name!="" && name!=null){
+			  alert("进入了")
+			  $.ajax({
+				  //几个参数需要注意一下
+				  async: false, //同步等待
+				  type: "POST",//方法类型
+				  url: "/college/save" ,//url
+				  data: 'name='+name,
+				  /*data:JSON.stringify({"username":name,"password":password}),*/
+				  //设置请求参数为json字符串,编码为UTF-8
+				  /*contentType:"test/html;charset=utf-8",*/
+				  datatype: "json",//预期服务器返回的数据类型
+				  success: function (data) {
+					 if(data.code==1) {
+						 parent.location.reload();
+					  }else {
+						 layer.msg('出现系统级别错误联系管理！',{icon:5,time:1000});
+					 }
+				  },
+				  error : function() {
+					  layer.msg('出现系统级别错误联系管理！',{icon:5,time:1000});
+				  }
+			  });
+		  }else {
+			  layer.msg('不许为空！',{icon:5,time:1000});
+		  }
 	  });
 	});
-$(function(){
-	$('.skin-minimal input').iCheck({
-		checkboxClass: 'icheckbox-blue',
-		radioClass: 'iradio-blue',
-		increaseArea: '20%'
+	$(function(){
+		$('.skin-minimal input').iCheck({
+			checkboxClass: 'icheckbox-blue',
+			radioClass: 'iradio-blue',
+			increaseArea: '20%'
+		});
+
+		$("#form-member-add").validate({
+			rules:{
+				username:{
+					required:true,
+					minlength:2,
+					maxlength:16
+				},
+				sex:{
+					required:true,
+				},
+				mobile:{
+					required:true,
+					isMobile:true,
+				},
+				email:{
+					required:true,
+					email:true,
+				},
+				collegename:{
+					required:true,
+				},
+
+			},
+			/*	onkeyup:false,
+                focusCleanup:true,
+                success:"valid",
+                submitHandler:function(form){
+                    //$(form).ajaxSubmit();
+                    var index = parent.layer.getFrameIndex(window.name);
+                    //parent.$('.btn-refresh').click();
+                    parent.layer.close(index);
+                }*/
+		});
 	});
-	
-	$("#form-member-add").validate({
-		rules:{
-			username:{
-				required:true,
-				minlength:2,
-				maxlength:16
-			},
-			sex:{
-				required:true,
-			},
-			mobile:{
-				required:true,
-				isMobile:true,
-			},
-			email:{
-				required:true,
-				email:true,
-			},
-			uploadfile:{
-				required:true,
-			},
-			
-		},
-		onkeyup:false,
-		focusCleanup:true,
-		success:"valid",
-		submitHandler:function(form){
-			//$(form).ajaxSubmit();
-			var index = parent.layer.getFrameIndex(window.name);
-			//parent.$('.btn-refresh').click();
-			parent.layer.close(index);
-		}
-	});
-});
 </script> 
 <!--/请在上方写此页面业务相关的脚本-->
 </body>

@@ -34,13 +34,13 @@
 		<input type="text" class="input-text" style="width:250px" placeholder="学院名称" id="a" name="a">
 		<button type="submit" class="btn btn-success radius" id="search" name=""><i class="Hui-iconfont">&#xe665;</i> 搜学院</button>
 	</div>
-	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="member_add('添加学院','addcollege.html','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加学院</a></span> <span class="r">共有数据：<strong>88</strong> 条</span> </div>
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="member_add('添加学院','addcollege.html','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加学院</a></span> <span class="r">共有数据：<strong id="count"></strong> 条</span> </div>
 	<div class="mt-20">
 		<table class="table table-border table-bordered table-hover table-bg table-sort">
 			<thead>
 			<tr class="text-c">
-				<th width="25"><input type="checkbox" name="" value=""></th>
-				<th width="80">ID</th>
+				<th width="25"><input id="all" type="checkbox" value=""></th>
+			<!--	<th width="80">ID</th>-->
 				<!--<th width="100">用户名</th>-->
 				<th width="40">院区名</th>
 		<!--		<th width="90">手机</th>
@@ -83,6 +83,14 @@
 <script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>
 <script type="text/javascript">
 	$(function(){
+		var flag=false;
+		$('#all').click(function(){
+			flag=!flag;
+			var items=$("input[name='item']");
+			for(var x=0;x<items.length;x++){
+				items[x].checked=flag;
+			}
+		});
 		$.ajax({
 			//几个参数需要注意一下
 			type: "GET",//方法类型
@@ -98,12 +106,13 @@
 /*					$('#userid').append(id);
 					$('#username').append(name);*/
 					var New=$('<tr class="text-c">'+
-					'<td>'+'<input type="checkbox" value="1" name="">'+'</td>'+
-					'<td id="userid">' +id+ '</td>'+
+					'<td>'+'<input name="item"  type="checkbox" value="'+id+'">'+'</td>'+
+					'<td id="userid" style=\'display:none\'>' +id+ '</td>'+
 					'<td id="username">' +name+ '</td>'+
-					'<td class="td-manage"> <a title="编辑" href="javascript:;" onclick="member_edit(\'编辑\',\'member-add.html\',\'4\',\'\',\'510\')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="change_password(\'修改密码\',\'change-password.html\',\'10001\',\'600\',\'270\')" href="javascript:;" title="修改密码"><i class="Hui-iconfont">&#xe63f;</i></a> <a title="删除" href="javascript:;" onclick="member_del(this)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>' +
+					'<td class="td-manage"> <a title="编辑" href="javascript:;" onclick="member_edit(\''+id+'\',\'editcollege.html\',\'4\',\'\',\'510\')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>  <a title="删除" href="javascript:;" onclick="member_del(this)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>' +
 					'</tr>');
 					$('#zhutiTable').append(New);
+					$('#count').text(i+1)
 				}
 				/*var obj = JSON.parse(data)*/
 				/*var last=JSON.stringify(data)*/
@@ -111,17 +120,44 @@
 			}
 		})
 	});
-	$(function(){
-		$('.table-sort').dataTable({
-			"aaSorting": [[ 1, "desc" ]],//默认第几个排序
-			"bStateSave": true,//状态保存
-			"aoColumnDefs": [
-				//{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-				{"orderable":false,"aTargets":[0,8,9]}// 制定列不参与排序
-			]
+	//	批量删除
+	function datadel(){
+		var userIds = new Array();
+		$("input:checked").each(function(){
+			if ($(this).val()!=""){
+				userIds.push($(this).val());
+			}
 		});
+		layer.confirm('确认要删除吗？',function(index){
+			if (userIds.length != 0){
+				$.ajax({
+					type:"post",
+					url:"/college/batchDelete",
+					data:{"userIds":userIds},
+					dataType:"json",
+					success:function(data){
+						if (data.code==1){
+							var items=$("input[name='item']");
+							var test1=$('#count').text();
+							for(var x=0;x<items.length;x++){
+								if (items[x].checked == true){
+									$(items[x]).parents("tr").remove();
+									 test1 = test1 - 1;
+								}
+							}
+							$('#count').text(test1)
+							layer.msg('已删除!',{icon:1,time:1000});
+						}else {
+							layer.msg('删除出现错误，请联系管理员！',{icon:5,time:1000})
+						}
 
-	});
+					}
+				});
+			}else {
+				layer.msg('没有任何一个选项，请选择后进行删除!',{icon:5,time:1000});
+			}
+		});
+	}
 	/*用户-添加*/
 	function member_add(title,url,w,h){
 		layer_show(title,url,w,h);
@@ -130,48 +166,14 @@
 	function member_show(title,url,id,w,h){
 		layer_show(title,url,w,h);
 	}
-	/*用户-停用*/
-	function member_stop(obj,id){
-		layer.confirm('确认要停用吗？',function(index){
-			$.ajax({
-				type: 'POST',
-				url: '',
-				dataType: 'json',
-				success: function(data){
-					$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_start(this,id)" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe6e1;</i></a>');
-					$(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已停用</span>');
-					$(obj).remove();
-					layer.msg('已停用!',{icon: 5,time:1000});
-				},
-				error:function(data) {
-					console.log(data.msg);
-				},
-			});
-		});
-	}
+
 
 	/*用户-启用*/
-	function member_start(obj,id){
-		layer.confirm('确认要启用吗？',function(index){
-			$.ajax({
-				type: 'POST',
-				url: '',
-				dataType: 'json',
-				success: function(data){
-					$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_stop(this,id)" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>');
-					$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
-					$(obj).remove();
-					layer.msg('已启用!',{icon: 6,time:1000});
-				},
-				error:function(data) {
-					console.log(data.msg);
-				},
-			});
-		});
-	}
+
 	/*用户-编辑*/
-	function member_edit(title,url,id,w,h){
-		layer_show(title,url,w,h);
+	function member_edit(data,url,id,w,h){
+		console.log(data);
+		editcollege(data,url,w,h);
 	}
 	/*密码-修改*/
 	function change_password(title,url,id,w,h){
@@ -182,18 +184,18 @@
 
 		var parentTR =obj.parentNode.parentNode;
 		var firstTd_value = $(parentTR).children('td').eq(1).text();
-		console.log("删除",firstTd_value);
 		layer.confirm('确认要删除吗？',function(index){
 			$.ajax({
 				type: 'POST',
 				url: '/college/dele',
 				/*   data: 'name='+name+'&user='+user,   */
 				data: 'id='+firstTd_value,
-				dataType: 'text',
+				dataType: 'json',
 				success: function(data){
-					if (data == "ok"){
+					if (data.code==1){
 						$(obj).parents("tr").remove();
 						layer.msg('已删除!',{icon:1,time:1000});
+						$('#count').text($('#count').text()-1);
 					}else {
 						show_err_msg("删除出现服务错误！请通知管理员维修")
 					}

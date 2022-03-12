@@ -4,15 +4,16 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializeFilter;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.mystery.entity.College;
+import com.mystery.entity.Response;
 import com.mystery.service.ICollegeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -39,26 +40,57 @@ public class CollegeController {
     }
     //根据ID删除学院
     @RequestMapping(value = "/dele" ,method = RequestMethod.POST)
-    public String deleCollege(String id){
+    public Response deleCollege(String id){
         int newid=Integer.parseInt(id);
         try {
             collegeService.dele(newid);
+            return Response.OK(null);
         }catch (Exception e){
-            return "sql error";
+            return Response.Error();
         }
-        return "ok";
     }
 
     //新增学院
     @RequestMapping(value = "/save" ,method = RequestMethod.POST)
-    public String saveCollege(String name){
+    public Response saveCollege(String name){
         try {
             collegeService.save(name);
+            return Response.OK(null);
         }catch (Exception e){
-            return "sql error";
+            return Response.Error();
         }
-        return "ok";
     }
+    //批量删除
+    @RequestMapping(value = "/batchDelete",method = RequestMethod.POST)
+    public Response batchDelete(@RequestParam("userIds[]") Integer[] userIds) {
+        List<Integer> userIdList = Arrays.asList(userIds);
+        try{
+            collegeService.batchDelete(userIdList);
+            return Response.OK(null);
+        }catch (Exception e){
+            return Response.Error();
+        }
+    }
+
+    //根据ID查询
+    @RequestMapping(value = "/IdQuery",method = RequestMethod.POST)
+    public  Response IdQuery(@RequestParam("id")int id){
+        try {
+            College college=collegeService.queryById(id);
+            return Response.OK(college);
+        }catch (Exception e){
+            return Response.Error();
+        }
+    }
+    //编辑
+    @RequestMapping(value = "/UpdataCollege",method = RequestMethod.POST)
+    public Response UpdataCollege(@RequestBody College college){
+        collegeService.UpdataByCollegeName(college);
+        System.out.println(college.getName());
+        System.out.println(college.getId());
+        return Response.OK(college);
+    }
+
     @RequestMapping(value="/getUsername",produces = "text/plain;charset=utf-8")
     public String getname (){
         return "hello";

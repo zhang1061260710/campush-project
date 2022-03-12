@@ -18,6 +18,8 @@ public interface HealthdailyMapper {
     //根据id进行删除
     void dele (int id);
 
+    void BatchDeleById(List<Integer> id);
+
     void UpdateWarning (@Param("id")String id,@Param("warning")String warning);
 
     List <Healthdaily> AllWarning(@Param("warning")String warning);
@@ -25,4 +27,8 @@ public interface HealthdailyMapper {
     void  deleWarning(@Param("id")int id);
 
     List<Healthdaily> UserWarning(@Param("number") String number);
+
+    Healthdaily QueryById(@Param("id") int id);
+
+    void EditUpdateById(Healthdaily healthdaily);
 }

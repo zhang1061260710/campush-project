@@ -1,6 +1,7 @@
 package com.mystery.service;
 
 import com.mystery.entity.Healthdaily;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -20,4 +21,11 @@ public interface IHealthdailyService {
     void deleWarning (int id);
 
     List<Healthdaily> UserWarning(String number);
+
+    void BatchDeleById(List<Integer> id);
+
+    Healthdaily QueryById(int id);
+
+    void EditUpdateById(Healthdaily healthdaily);
+
 }

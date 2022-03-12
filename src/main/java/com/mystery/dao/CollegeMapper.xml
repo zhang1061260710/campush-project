@@ -13,4 +13,18 @@
         insert into college (name)
         values (#{name})
     </insert>
+    <delete id="batchDelete" parameterType="java.util.List">
+        delete from college where id in
+        <foreach collection="list" item="userIds" open="(" separator="," close=")">
+            #{userIds}
+        </foreach>
+    </delete>
+    <select id="queryById" parameterType="int" resultType="com.mystery.entity.College">
+        select * from  college where id=#{id}
+    </select>
+
+    <update id="UpdataByCollegeName" parameterType="com.mystery.entity.College">
+        UPDATE college SET name =#{name}
+        WHERE id=#{id}
+    </update>
 </mapper>

@@ -260,7 +260,6 @@ public class UserController {
     @RequestMapping(value = "/batchDelete",method = RequestMethod.POST)
     public Response batchDelete(@RequestParam("userIds[]") Integer[] userIds){
         List<Integer> userIdList = Arrays.asList(userIds);
-        Arrays.stream(userIds);
         try{
             userServcie.batchDelete(userIdList);
         }catch (Exception e){

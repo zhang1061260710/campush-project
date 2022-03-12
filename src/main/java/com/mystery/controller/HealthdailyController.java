@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -88,5 +89,32 @@ public class HealthdailyController {
     public  Response  relieveWarning(@RequestParam("id")String id){
         iHealthdailyService.deleWarning(Integer.valueOf(id));
         return Response.OK("ok");
+    }
+    //批量删除
+    @RequestMapping(value = "/BatchDele",method = RequestMethod.POST)
+    public Response BatchDeleteById(@RequestParam("id[]") Integer[] id){
+        List<Integer> userIdList = Arrays.asList(id);
+        try{
+            iHealthdailyService.BatchDeleById(userIdList);
+            return Response.OK(null);
+        }catch (Exception e) {
+            return Response.Error();
+        }
+    }
+    //根据ID查询当前日报，编辑
+    @RequestMapping(value = "/QueryDaily",method = RequestMethod.POST)
+    public Healthdaily QueryById(@RequestParam("id") int id){
+        Healthdaily Queryhealthdaily=iHealthdailyService.QueryById(id);
+        return Queryhealthdaily;
+    }
+    //编辑更新数据
+    @RequestMapping(value = "EditUpdate",method = RequestMethod.POST)
+    public Response EditUpdateDaily(@RequestBody Healthdaily healthdaily){
+        try{
+            iHealthdailyService.EditUpdateById(healthdaily);
+            return Response.OK(healthdaily);
+        }catch (Exception e){
+            return Response.Error();
+        }
     }
 }

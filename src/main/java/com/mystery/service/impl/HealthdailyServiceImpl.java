@@ -51,4 +51,19 @@ public class HealthdailyServiceImpl implements IHealthdailyService {
     public List<Healthdaily> UserWarning(String number) {
         return healthdailyMapper.UserWarning(number);
     }
+
+    @Override
+    public void BatchDeleById(List<Integer> id) {
+        healthdailyMapper.BatchDeleById(id);
+    }
+
+    @Override
+    public Healthdaily QueryById(int id) {
+        return healthdailyMapper.QueryById(id);
+    }
+
+    @Override
+    public void EditUpdateById(Healthdaily healthdaily) {
+        healthdailyMapper.EditUpdateById(healthdaily);
+    }
 }
