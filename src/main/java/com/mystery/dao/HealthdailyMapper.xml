@@ -59,4 +59,11 @@
         UPDATE healthdaily SET  numberl=#{numberl},username=#{username},contactnumber=#{contactnumber},dormitory=#{dormitory},dormitoryid=#{dormitoryid},abnormal=#{abnormal},diagnosis=#{diagnosis},highrisk=#{highrisk},source=#{source}
         WHERE id=#{id}
     </update>
+
+    <update id="BatchDeleWarningById" parameterType="java.util.List">
+        UPDATE healthdaily SET warning=0 WHERE id in
+        <foreach collection="list" item="userIds" open="(" separator="," close=")">
+            #{userIds}
+        </foreach>
+    </update>
 </mapper>

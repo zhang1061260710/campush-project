@@ -25,4 +25,7 @@ public interface UserMapper {
     User NumberQuery(String number);
     //批量删除
     void  batchDelete (List<Integer> userIds);
+
+    //检测学号和用户是否存在
+    int WhetherExistByNumberUsernmae(@Param("number") String number, @Param("username") String username);
 }

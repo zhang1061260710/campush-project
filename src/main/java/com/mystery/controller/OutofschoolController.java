@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -44,4 +45,17 @@ public class OutofschoolController {
             return Response.Error();
         }
     }
+
+    //批量删除（归校，过期申请）
+    @RequestMapping(value = "/DeleOutoFschool",method = RequestMethod.POST,produces = {"application/json;charset=utf-8"})
+    public  Response  BatchDeleOutoFschool(@RequestParam("userIds[]") Integer[] userIds){
+        try {
+            List<Integer> userIdList = Arrays.asList(userIds);
+            outofschoolService.BatchDeleOutoFschool(userIdList);
+            return Response.OK(null);
+        }catch (Exception e){
+            return Response.Error();
+        }
+    }
+
 }

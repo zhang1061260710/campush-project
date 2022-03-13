@@ -106,7 +106,6 @@
 					for(var i=0;i<data.data.areaTree.length;i++){
 						var obj = data.data.areaTree[i];
 						if (obj.id==0){
-							console.log(obj.children.length);
 							for (var a=1; a <= Math.ceil(obj.children.length/strip); a++){
 								var Newshuzi=$('<a onclick="fenpage(this)" style="margin: 5px;padding: 5px">'+a+'</a>');
 								$('#shuzi').append(Newshuzi);
@@ -277,7 +276,6 @@
 						for(var i=0;i<data.data.areaTree.length;i++){
 							var obj = data.data.areaTree[i]; //拿到全部国家
 							if (obj.id==0){ //只要中国
-								console.log(obj.children.length); //打印中国下面省多长度
 								//中国省长度除以每页要显示多数量并求小数补全（例如：结果为1.1 得到的是2整数）
 								for (var a=1; a <= Math.ceil(obj.children.length/strip); a++){
 									var Newshuzi=$('<a onclick="fenpage(this)" style="margin: 5px;padding: 5px">'+a+'</a>');
@@ -358,7 +356,6 @@
 		function admin_role_del(obj,id){
 			var parentTR =obj.parentNode.parentNode;
 			var firstTd_value = $(parentTR).children('td').eq(1).text();
-			console.log(firstTd_value);
 			layer.confirm('取消警告须谨慎，确认要取消吗？',function(index){
 				$.ajax({
 					type: 'POST',
@@ -370,7 +367,7 @@
 						layer.msg('已取消警告!',{icon:1,time:1000});
 					},
 					error:function(data) {
-						console.log(data.msg);
+						layer.msg('系统出现故障，请联系管理员!',{icon:5,time:2000});
 					},
 				});
 			});

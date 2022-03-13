@@ -14,4 +14,6 @@ public interface OutofschoolMapper {
     void UpdateApproval(@Param("number") String number, @Param("whether") String whether);
 
     void SaveAdd (Outofschool outofschool);
+
+    void BatchDeleOutoFschool(List<Integer> userIds);
 }

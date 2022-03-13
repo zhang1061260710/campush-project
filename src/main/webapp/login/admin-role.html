@@ -24,7 +24,7 @@
 <body>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 感染警告管理 <span class="c-gray en">&gt;</span> 感染警告 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
-	<div class="cl pd-5 bg-1 bk-gray"> <span class="l"> <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除告警</a></span> <span class="r">共有数据：<strong id="count"></strong> 条</span> </div>
+	<div class="cl pd-5 bg-1 bk-gray"> <span class="l"> <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除告警</a></span> <span class="r">共有数据：<strong id="count">0</strong> 条</span> </div>
 	<table class="table table-border table-bordered table-hover table-bg">
 		<thead>
 			<tr>
@@ -78,63 +78,117 @@
 			//设置请求参数为json字符串,编码为UTF-8
 			/* contentType:"application/json;charset=utf-8",*/
 			success: function (data) {
-				for(var i=0;i<data.length;i++){
-					var id = data[i].id;
-					var numberl = data[i].numberl;
-					var username= data[i].username
-					var contactnumber= data[i].contactnumber
-					var dormitory= data[i].dormitory
-					var dormitoryid= data[i].dormitoryid
-					var abnormal= data[i].abnormal
-					var diagnosis= data[i].diagnosis
-					var highrisk= data[i].highrisk
-					var source= data[i].source
-					var time = data[i].time
-					var warning= data[i].warning
-					if(abnormal==0){
-						abnormal='否'
-					}else {
-						abnormal='是'
-					}
-					if (diagnosis==0){
-						diagnosis='否'
-					}else {
-						diagnosis='是'
-					}
-					if(highrisk==0){
-						highrisk='否'
-					}else{
-						highrisk='是'
-					}
+				if (data.length!=0){
+					for(var i=0;i<data.length;i++){
+						var id = data[i].id;
+						var numberl = data[i].numberl;
+						var username= data[i].username
+						var contactnumber= data[i].contactnumber
+						var dormitory= data[i].dormitory
+						var dormitoryid= data[i].dormitoryid
+						var abnormal= data[i].abnormal
+						var diagnosis= data[i].diagnosis
+						var highrisk= data[i].highrisk
+						var source= data[i].source
+						var time = data[i].time
+						var warning= data[i].warning
+						if(abnormal==0){
+							abnormal='否'
+						}else {
+							abnormal='是'
+						}
+						if (diagnosis==0){
+							diagnosis='否'
+						}else {
+							diagnosis='是'
+						}
+						if(highrisk==0){
+							highrisk='否'
+						}else{
+							highrisk='是'
+						}
 
-					var newtime = timestampToTime(time)
-					var New=$('<tr class="text-c">'+
-					'<td><input type="checkbox" value="" name=""></td>'+
-					'<td style=\'display:none\'>'+ id +'</td>'+
-					'<td>'+numberl+'</td>'+
-					'<td>'+username+'</td>'+
-					'<td>'+contactnumber+'</td>'+
-					'<td>'+dormitory+'</td>'+
-					'<td>'+dormitoryid+'</td>'+
-					'<td>'+abnormal+'</td>'+
-					'<td>'+diagnosis+'</td>'+
-					'<td>'+highrisk+'</td>'+
-					'<td>'+source+'</td>'+
-					'<td>'+newtime+'</td>'+
-					'<td class="f-14"><a title="取消警告" href="javascript:;" onclick="admin_role_del(this,\'1\')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>'+
-					'</tr>');
+						var newtime = timestampToTime(time)
+						var New=$('<tr class="text-c">'+
+								'<td><input type="checkbox" value="'+id+'" name="item"></td>'+
+								'<td style=\'display:none\'>'+ id +'</td>'+
+								'<td>'+numberl+'</td>'+
+								'<td>'+username+'</td>'+
+								'<td>'+contactnumber+'</td>'+
+								'<td>'+dormitory+'</td>'+
+								'<td>'+dormitoryid+'</td>'+
+								'<td>'+abnormal+'</td>'+
+								'<td>'+diagnosis+'</td>'+
+								'<td>'+highrisk+'</td>'+
+								'<td>'+source+'</td>'+
+								'<td>'+newtime+'</td>'+
+								'<td class="f-14"><a title="取消警告" href="javascript:;" onclick="admin_role_del(this,\'1\')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>'+
+								'</tr>');
+						$('#zhutiTable').append(New);
+						if(data != null){
+							$('#count').text(i+1)
+						}else {
+							$('#count').text(0)
+						}
+
+					}
+				}else {
+					var New=$('<tr id="Nodata" class="text-c">' +
+							'<td colspan="12">暂无数据</td>' +
+							'</tr>')
 					$('#zhutiTable').append(New);
-					if(data != null){
-						$('#count').text(i+1)
-					}else {
-						$('#count').text(0)
-					}
-
 				}
+
 			}
 		})
 	});
+	//批量删除
+	function datadel(){
+		var userIds = new Array();
+		$("input[name='item']:checked").each(function(){
+			if ($(this).val()!=""){
+				userIds.push($(this).val());
+			}
+		});
+		layer.confirm('确认要删除吗？',function(index){
+			if (userIds.length != 0){
+				$.ajax({
+					type:"post",
+					url:"/Healthdaily/BatchDeleWarning",
+					data:{"userIds":userIds},
+					dataType:"json",
+					success:function(data){
+						if (data.code==1){
+							var items=$("input[name='item']");
+							var test1=$('#count').text();
+							for(var x=0;x<items.length;x++){
+								if (items[x].checked == true){
+									$(items[x]).parents("tr").remove();
+									test1 = test1 - 1;
+								}
+							}
+							$('#count').text(test1);
+							if (test1==0){
+								$('#Nodata').parent().empty();
+								var New=$('<tr id="Nodata" class="text-c">' +
+										'<td colspan="12">暂无数据</td>' +
+										'</tr>')
+								$('#zhutiTable').append(New);
+							}
+							layer.msg('已删除!',{icon:1,time:1000});
+						}else {
+							layer.msg('删除出现错误，请联系管理员！',{icon:5,time:1000})
+						}
 
+					}
+				});
+			}else {
+				layer.msg('没有任何一个选项，请选择后进行删除!',{icon:5,time:1000});
+			}
+		});
+	}
+
+	//时间戳转时间格式
 	function timestampToTime(timestamp) {
 		var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
 		var Y = date.getFullYear() + '-';
@@ -157,7 +211,6 @@ function admin_role_edit(title,url,id,w,h){
 function admin_role_del(obj,id){
 	var parentTR =obj.parentNode.parentNode;
 	var firstTd_value = $(parentTR).children('td').eq(1).text();
-	console.log(firstTd_value);
 	layer.confirm('取消警告须谨慎，确认要取消吗？',function(index){
 		$.ajax({
 			type: 'POST',

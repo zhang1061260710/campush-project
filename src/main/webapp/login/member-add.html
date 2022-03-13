@@ -172,8 +172,6 @@
 			datatype: "json",//预期服务器返回的数据类型
 			success: function (data) {
 				$('#numberl').val(data.data.numberl);
-				console.log(data);
-
 			}
 		})
 	});
@@ -188,18 +186,6 @@
 		var highrisk = $("input[name='highrisk']:checked").val();
 		var source = $('#source').val();
 		var param ={"numberl":numberl,"username":username,"contactnumber":contactnumber,"dormitory":dormitory,"dormitoryid":dormitoryid,"abnormal":abnormal,"diagnosis":diagnosis,"highrisk":highrisk,"source":source};
-		console.log(param);
-				/*	var DataDeal = {
-                        //将从form中通过$('#form').serialize()获取的值转成json
-                        formToJson: function (data) {
-                            data = data.replace(/&/g, "\",\"");
-                            data = data.replace(/=/g, "\":\"");
-                            data = "{\"" + data + "\"}";
-                            return data;
-                        }
-                    };*/
-/*		var arry=$('#form-member-add').serialize()
-		var jsonData=DataDeal.formToJson(arry);*/
 		$.ajax({
 			//几个参数需要注意一下
 			async:false, //同步
@@ -211,7 +197,6 @@
 			contentType:"application/json;charset=utf-8",
 			datatype: "json",//预期服务器返回的数据类型
 			success: function (data) {
-				console.log(data);
 				parent.location.reload(); //刷新父页面
 			},
 			error : function() {

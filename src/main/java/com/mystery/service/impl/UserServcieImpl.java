@@ -55,4 +55,9 @@ public class UserServcieImpl implements IUserService {
 
         userMapper.batchDelete(userIds);
     }
+
+    @Override
+    public int WhetherExistByNumberUsernmae(String number, String username) {
+        return userMapper.WhetherExistByNumberUsernmae(number,username);
+    }
 }

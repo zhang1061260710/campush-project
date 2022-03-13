@@ -283,7 +283,6 @@
 				userIds.push($(this).val());
 			}
 		});
-		console.log(userIds)
 		layer.confirm('确认要删除吗？',function(index){
 			if (userIds.length != 0){
 				$.ajax({
@@ -404,7 +403,6 @@ function change_password(title,url,id,w,h){
 function member_del(obj,id){
 	var parentTR =obj.parentNode.parentNode;
 	var firstTd_value = $(parentTR).children('td').eq(1).text();
-	console.log("删除",firstTd_value);
 	layer.confirm('确认要删除吗？',function(index){
 		$.ajax({
 			type: 'POST',

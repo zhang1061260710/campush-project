@@ -2,6 +2,7 @@ package com.mystery.service;
 
 
 import com.mystery.entity.User;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -25,5 +26,6 @@ public interface IUserService {
     User NumberQuery(String number);
 
     void batchDelete(List<Integer> userIds);
-
+    //检测注册用户名与用户学号是否存在
+    int WhetherExistByNumberUsernmae( String number, String username);
 }

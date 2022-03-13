@@ -234,9 +234,17 @@ public class UserController {
     @RequestMapping(value = "/preservation",method = RequestMethod.POST)
     public String preservation(@RequestBody User user,HttpServletRequest req){
         HttpSession session = req.getSession();
-        Object kv = session.getAttribute("data");
-        String kvname=String.valueOf(kv);
-        user.setUsername(kvname);
+        Object kv = session.getAttribute("data"); //获取当前session中存的用户名
+        String kvname=String.valueOf(kv);    // Object 转String类型
+        user.setUsername(kvname);     //前端传入的里面插入Username
+        userServcie.PersonalUpdate(user);
+        JSONObject json=new JSONObject();
+        json.put("message","ok");
+        return JSONObject.toJSONString(json);
+    }
+
+    @RequestMapping(value = "/EditUserInfo",method = RequestMethod.POST)
+    public String EditUser(@RequestBody User user,HttpServletRequest req){
         userServcie.PersonalUpdate(user);
         JSONObject json=new JSONObject();
         json.put("message","ok");
@@ -266,6 +274,21 @@ public class UserController {
             return Response.Error();
         }
         return Response.OK(null);
+    }
+
+    //验证用户名和学号是否存在
+    @RequestMapping(value = "/WhetherExist",method = RequestMethod.POST)
+    public Response WhetherExist(@RequestParam("number") String number, @RequestParam("username")String usernmae){
+       try{
+           int count=userServcie.WhetherExistByNumberUsernmae(number,usernmae);
+           if (count==0){
+               return Response.OK(null);
+           }else {
+               return Response.Error();
+           }
+       }catch (Exception e){
+           return Response.Error();
+       }
     }
     @RequestMapping(value="/hello")
     public ModelAndView Hello(){

@@ -11,4 +11,6 @@ public interface IOutofschoolService {
     void UpdateApproval(String number,String whether);
 
     void  SaveAdd(Outofschool outofschool);
+    //批量删除
+    void BatchDeleOutoFschool(List<Integer> userIds);
 }

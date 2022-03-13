@@ -26,4 +26,11 @@
         values (#{number},#{leavecontent},#{leavetime},0)
     </insert>
 
+    <delete id="BatchDeleOutoFschool" parameterType="java.util.List">
+        delete from  outofschool where id in
+        <foreach collection="list" item="userIds" open="(" separator="," close=")">
+            #{userIds}
+        </foreach>
+    </delete>
+
 </mapper>

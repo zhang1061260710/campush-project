@@ -19,7 +19,7 @@
 <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
-<title>新增图片</title>
+<title>编辑</title>
 <link href="lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -28,6 +28,7 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>学号：</label>
 			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" style='display:none' class="input-text" value=""  id="username">
 				<input type="text" class="input-text" value="" placeholder="" id="number" name="">
 			</div>
 		</div>
@@ -150,6 +151,7 @@
 
 
 function article_save_submit() {
+		var username=$('#username').val()	//用户登入名
 		var numberl = $('#number').val()			//学号
 		var fullname = $('#fullname').val()			//真是姓名
 		var gender = $('#gender').val()				//性别
@@ -159,13 +161,13 @@ function article_save_submit() {
 		var mail = $('#mail').val()			//邮箱
 		var collegeid = $('#collegeid').val()  //学院
 		var photo=$('#getid').val()		//图片路径
-		var param = {"numberl": numberl,"fullname":fullname,"gender":gender,"speciality":articlesort,"classnumber":keywords,"contactnumber":author,"mail":mail,"college":collegeid,"photo":photo};
+		var param = {"numberl": numberl,"username":username,"fullname":fullname,"gender":gender,"speciality":articlesort,"classnumber":keywords,"contactnumber":author,"mail":mail,"college":collegeid,"photo":photo};
 		$.ajax({
 			timeout : 20000,
 			type : "POST",
 			contentType: "application/json;charset=utf-8",
 			dataType : "JSON",
-			url : "/user/preservation",
+			url : "/user/EditUserInfo",
 			data : JSON.stringify(param),
 			success : function(data){
 				window.parent.location.reload();

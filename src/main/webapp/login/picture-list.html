@@ -86,37 +86,44 @@
 			//设置请求参数为json字符串,编码为UTF-8
 			/* contentType:"application/json;charset=utf-8",*/
 			success: function (data) {
-				for(var i=0;i<data.length;i++){
-					var id = data[i].id;
-					var numberl = data[i].numberl;
-					var fullname= data[i].fullname
-					var gender= data[i].gender
-					var college= data[i].college
-					var speciality= data[i].speciality
-					var classnumber= data[i].classnumber
-					var contactnumber= data[i].contactnumber
-					var mail= data[i].mail
-					var photo= data[i].photo
-					if(gender==0){
-						gender='男';
-					}else{
-						gender='女';
+				if (data.length !=0){
+					for(var i=0;i<data.length;i++){
+						var id = data[i].id;
+						var numberl = data[i].numberl;
+						var fullname= data[i].fullname
+						var gender= data[i].gender
+						var college= data[i].college
+						var speciality= data[i].speciality
+						var classnumber= data[i].classnumber
+						var contactnumber= data[i].contactnumber
+						var mail= data[i].mail
+						var photo= data[i].photo
+						if(gender==0){
+							gender='男';
+						}else{
+							gender='女';
+						}
+						var New=$('<tr id="trlist" class="text-c">'+
+								'<td>'+'<input name="item" type="checkbox" value="'+id+'">'+'</td>'+
+								'<td>'+ numberl +'</td>'+
+								'<td>'+ fullname +'</td>'+
+								'<td>'+ gender +'</td>'+
+								'<td>'+ college +'</td>'+
+								'<td>'+ speciality +'</td>'+
+								'<td>'+ classnumber +'</td>'+
+								'<td>'+ contactnumber +'</td>'+
+								'<td>'+ mail +'</td>'+
+								'<td><a href="javascript:;"><img width="100" class="picture-thumb" src="/tmpFiles/'+photo+'"></a></td>'+
+								'<td class="td-manage"><a style="text-decoration:none" class="ml-5" onClick="picture_edit(\''+numberl+'\',\'picture-add.html\',\'10001\')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="picture_del(this,\'10001\')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>'+
+								'</tr>');
+						$('#zhutiTable').append(New);
+						$('#count').text(i+1)
 					}
-					var New=$('<tr id="trlist" class="text-c">'+
-    '<td>'+'<input name="item" type="checkbox" value="'+id+'">'+'</td>'+
-				'<td>'+ numberl +'</td>'+
-				'<td>'+ fullname +'</td>'+
-				'<td>'+ gender +'</td>'+
-				'<td>'+ college +'</td>'+
-				'<td>'+ speciality +'</td>'+
-				'<td>'+ classnumber +'</td>'+
-				'<td>'+ contactnumber +'</td>'+
-				'<td>'+ mail +'</td>'+
-				'<td><a href="javascript:;"><img width="100" class="picture-thumb" src="/tmpFiles/'+photo+'"></a></td>'+
-				'<td class="td-manage"><a style="text-decoration:none" class="ml-5" onClick="picture_edit(\''+numberl+'\',\'picture-add.html\',\'10001\')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="picture_del(this,\'10001\')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>'+
-				'</tr>');
+				}else {
+					var New=$('<tr id="Nodata" class="text-c">' +
+							'<td colspan="12">无数据，警告：当前数据为空时管理员账号也将不存在！请联系数据库操作人员进行手动添加！</td>' +
+							'</tr>')
 					$('#zhutiTable').append(New);
-					$('#count').text(i+1)
 				}
 			}
 		})
@@ -148,36 +155,45 @@
 					data:"number="+number,
 					dataType:"json",
 					success:function(data){
-						var id = data.id;
-						var numberl = data.numberl;
-						var fullname= data.fullname
-						var gender= data.gender
-						var college= data.college
-						var speciality= data.speciality
-						var classnumber= data.classnumber
-						var contactnumber= data.contactnumber
-						var mail= data.mail
-						var photo= data.photo
-						if(gender==0){
-							gender='男';
-						}else{
-							gender='女';
+						if(data!='' && data!=null){
+							var id = data.id;
+							var numberl = data.numberl;
+							var fullname= data.fullname
+							var gender= data.gender
+							var college= data.college
+							var speciality= data.speciality
+							var classnumber= data.classnumber
+							var contactnumber= data.contactnumber
+							var mail= data.mail
+							var photo= data.photo
+							if(gender==0){
+								gender='男';
+							}else{
+								gender='女';
+							}
+							var New=$('<tr id="trlist" class="text-c">'+
+									'<td>'+'<input name="item" type="checkbox" value="'+id+'">'+'</td>'+
+									'<td>'+ numberl +'</td>'+
+									'<td>'+ fullname +'</td>'+
+									'<td>'+ gender +'</td>'+
+									'<td>'+ college +'</td>'+
+									'<td>'+ speciality +'</td>'+
+									'<td>'+ classnumber +'</td>'+
+									'<td>'+ contactnumber +'</td>'+
+									'<td>'+ mail +'</td>'+
+									'<td><a href="javascript:;"><img width="100" class="picture-thumb" src="/tmpFiles/'+photo+'"></a></td>'+
+									'<td class="td-manage"><a style="text-decoration:none" class="ml-5" onClick="picture_edit(\''+numberl+'\',\'picture-add.html\',\'10001\')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="picture_del(this,\'10001\')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>'+
+									'</tr>');
+							$('#zhutiTable').append(New);
+							$('#count').text(1)
+						}else {
+							$('#Nodata').parent().empty();
+							var New = $('<tr id="Nodata" class="text-c">' +
+									'<td colspan="12">暂无数据</td>' +
+									'</tr>')
+							$('#zhutiTable').append(New);
 						}
-						var New=$('<tr id="trlist" class="text-c">'+
-								'<td>'+'<input name="item" type="checkbox" value="'+id+'">'+'</td>'+
-								'<td>'+ numberl +'</td>'+
-								'<td>'+ fullname +'</td>'+
-								'<td>'+ gender +'</td>'+
-								'<td>'+ college +'</td>'+
-								'<td>'+ speciality +'</td>'+
-								'<td>'+ classnumber +'</td>'+
-								'<td>'+ contactnumber +'</td>'+
-								'<td>'+ mail +'</td>'+
-								'<td><a href="javascript:;"><img width="100" class="picture-thumb" src="/tmpFiles/'+photo+'"></a></td>'+
-								'<td class="td-manage"><a style="text-decoration:none" class="ml-5" onClick="picture_edit(\''+numberl+'\',\'picture-add.html\',\'10001\')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="picture_del(this,\'10001\')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>'+
-								'</tr>');
-						$('#zhutiTable').append(New);
-						$('#count').text(1)
+
 					}
 				})
 			}else {
@@ -194,7 +210,6 @@ function datadel(){
 		}
 	});
 	layer.confirm('确认要删除吗？',function(index){
-	console.log(userIds);
 	if (userIds.length != 0){
 		$.ajax({
 			type:"post",
@@ -305,6 +320,7 @@ function picture_edit(title,url,id){
 					}else {
 						data.gender="女"
 					}*/
+					body.contents().find("#username").val(data.username);
 					body.contents().find("#number").val(data.numberl);
 					body.contents().find("#fullname").val(data.fullname);
 					body.contents().find("#gender").val(data.gender);
@@ -313,6 +329,7 @@ function picture_edit(title,url,id){
 					body.contents().find("#contactnumber").val(data.contactnumber);
 					body.contents().find("#mail").val(data.mail);
 					body.contents().find("#collegeid").val(data.college);
+					body.contents().find("#getid").val(data.photo);
 					var New=$('<img width="80" id="imgg" class="imgg" src="/tmpFiles/'+data.photo+'">');
 					body.contents().find("#imgpp").append(New);
 

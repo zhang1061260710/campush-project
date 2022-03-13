@@ -31,4 +31,6 @@ public interface HealthdailyMapper {
     Healthdaily QueryById(@Param("id") int id);
 
     void EditUpdateById(Healthdaily healthdaily);
+
+    void BatchDeleWarningById(List<Integer> userIds);
 }

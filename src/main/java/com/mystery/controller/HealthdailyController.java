@@ -117,4 +117,15 @@ public class HealthdailyController {
             return Response.Error();
         }
     }
+    //批量删除警告（更改warning=0）
+    @RequestMapping(value = "/BatchDeleWarning",method = RequestMethod.POST)
+    public Response BatchDeleWarning(@RequestParam("userIds[]") Integer[] userIds){
+        try {
+            List<Integer> userIdList = Arrays.asList(userIds);
+            iHealthdailyService.BatchDeleWarningById(userIdList);
+            return Response.OK(null);
+        }catch (Exception e){
+            return Response.Error();
+        }
+    }
 }

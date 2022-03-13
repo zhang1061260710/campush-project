@@ -28,4 +28,6 @@ public interface IHealthdailyService {
 
     void EditUpdateById(Healthdaily healthdaily);
 
+    void BatchDeleWarningById(List<Integer> userIds);
+
 }

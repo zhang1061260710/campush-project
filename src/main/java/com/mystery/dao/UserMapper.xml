@@ -32,4 +32,7 @@
                 #{userIds}
             </foreach>
     </delete>
+    <select id="WhetherExistByNumberUsernmae" parameterType="String" resultType="int">
+        select  count(*)  FROM user  where  numberl=#{number} or username=#{username}
+    </select>
 </mapper>

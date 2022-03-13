@@ -28,4 +28,9 @@ public class OutofschoolServiceImpl implements IOutofschoolService {
     public void SaveAdd(Outofschool outofschool) {
         outofschoolMapper.SaveAdd(outofschool);
     }
+
+    @Override
+    public void BatchDeleOutoFschool(List<Integer> userIds) {
+        outofschoolMapper.BatchDeleOutoFschool(userIds);
+    }
 }
