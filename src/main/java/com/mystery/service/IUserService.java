@@ -28,4 +28,7 @@ public interface IUserService {
     void batchDelete(List<Integer> userIds);
     //检测注册用户名与用户学号是否存在
     int WhetherExistByNumberUsernmae( String number, String username);
+
+    //修改密码
+    void UpdatePasswordByNumber(String number,String password);
 }

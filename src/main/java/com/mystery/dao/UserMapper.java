@@ -28,4 +28,7 @@ public interface UserMapper {
 
     //检测学号和用户是否存在
     int WhetherExistByNumberUsernmae(@Param("number") String number, @Param("username") String username);
+
+    //修改密码
+    void UpdatePasswordByNumber(@Param("number")String number,@Param("password")String password);
 }

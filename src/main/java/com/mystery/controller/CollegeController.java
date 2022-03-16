@@ -95,4 +95,5 @@ public class CollegeController {
     public String getname (){
         return "hello";
     }
+
 }

@@ -35,4 +35,7 @@
     <select id="WhetherExistByNumberUsernmae" parameterType="String" resultType="int">
         select  count(*)  FROM user  where  numberl=#{number} or username=#{username}
     </select>
+    <update id="UpdatePasswordByNumber" parameterType="String">
+        UPDATE user SET password=#{password}  WHERE numberl=#{number}
+    </update>
 </mapper>

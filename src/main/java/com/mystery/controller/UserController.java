@@ -290,6 +290,16 @@ public class UserController {
            return Response.Error();
        }
     }
+    //更改密码
+    @RequestMapping(value = "/updatepasswod",method = RequestMethod.POST)
+    public Response updatePassword(@RequestParam("number") String number,@RequestParam("password")String password){
+        try{
+            userServcie.UpdatePasswordByNumber(number,password);
+            return Response.OK(null);
+        }catch (Exception e){
+            return Response.Error();
+        }
+    }
     @RequestMapping(value="/hello")
     public ModelAndView Hello(){
         return new ModelAndView("/index");

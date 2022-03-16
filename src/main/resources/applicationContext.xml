@@ -11,8 +11,9 @@
     <!--dao层配置文件开始-->
     <!--    1，配置连接池-->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://192.168.5.16:3306/demo?useUnicode=true&amp;characterEncoding=UTF-8"/>
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <!--<property name="url" value="jdbc:mysql://192.168.4.20:3306/demo?useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC"/>-->
+        <property name="url" value="jdbc:mysql://192.168.4.20:3306/demo?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false"/>
         <property name="username" value="admin"/>
         <property name="password" value="!QAZ2wsx#EDC"/>
     </bean>

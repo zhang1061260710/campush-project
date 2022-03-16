@@ -60,4 +60,9 @@ public class UserServcieImpl implements IUserService {
     public int WhetherExistByNumberUsernmae(String number, String username) {
         return userMapper.WhetherExistByNumberUsernmae(number,username);
     }
+
+    @Override
+    public void UpdatePasswordByNumber(String number, String password) {
+        userMapper.UpdatePasswordByNumber(number,password);
+    }
 }
