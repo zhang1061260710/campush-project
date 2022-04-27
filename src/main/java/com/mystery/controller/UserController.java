@@ -133,12 +133,9 @@ public class UserController {
         List <User> Alluser= userServcie.AllUserList();
         SerializeFilter scriptArrayFilter = null;
         String jsonStr = JSONObject.toJSONString(Alluser,new SerializeFilter[]{scriptArrayFilter}, SerializerFeature.WriteMapNullValue);
-       /* 这种是转换乱码为utf8，仅供参考，没啥软用。一般使用框架的响应方式，没必要写成这种。也可以使用（HttpServletRequest req, HttpServletResponse resp）来进行响应
-        获取前端传入都值方式有很多，可以用注解实体类接受json，也可以使/用getParameter，或者前端ajax 对应的转进json或者xxx=1 这些都能得到前端输入都内容。方式不要太多
-        这里这么简单怎么来！*/
-        /*String newjson = new String(jsonStr.getBytes(StandardCharsets.UTF_8));*/
         return jsonStr;
     }
+
     //疫情接口
     @RequestMapping(value="/Ncoronavirus")
     public void coronavirus(HttpServletRequest req, HttpServletResponse resp) throws IOException {

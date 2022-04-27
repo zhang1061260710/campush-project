@@ -58,6 +58,8 @@
                                         show_msg('登录成功咯！  正在为您跳转...','/login/index1.html');
                                     }else if (data.data.role==0){
                                         show_msg('登录成功咯！  正在为您跳转...','/login/index.html');
+                                    }else if (data.data.role==1){
+                                        show_msg('登录成功咯！  正在为您跳转...','/login/teacher.html')
                                     }
                                 } else{
                                     show_err_msg('用户不存在,或密码错误!');
@@ -74,7 +76,8 @@
     </script>
     <style type="text/css">
 		* html,* html body{background-image:url(about:blank);background-attachment:fixed;}
-		html{color:#000;background-color:#F2F2F2;}
+		html{color:#000;background-color:#F2F2F2;background: url("BackgroundImg.jpeg") no-repeat;background-size:100% 100%;
+            background-attachment:fixed;}
 		body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td{margin:0;padding:0;}
 		table {border-collapse:collapse;border-spacing:0;}
 		img,button,input {vertical-align:middle;border:none;}

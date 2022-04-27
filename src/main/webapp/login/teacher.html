@@ -177,23 +177,23 @@
 					$('#User').append(data.data.username);
 					if (data.data.role==0){
 						$('#role-li').append("超级管理员");
+						window.location.href="index.html";
 					}else if (data.data.role==2){
 						$('#role-li').append("学生");
 						window.location.href="index1.html";
 					}else if (data.data.role==1){
 						$('#role-li').append("教师");
-						window.location.href="teacher.html";
 					}
 				}else {
 					$('#User').append(data.data.fullname);
 					if (data.data.role==0){
 						$('#role-li').append("超级管理员");
+						window.location.href="index.html";
 					}else if (data.data.role==2){
 						$('#role-li').append("学生")
 						window.location.href="index1.html";
 					}else if (data.data.role==1){
-						$('#role-li').append("教师");
-						window.location.href="teacher.html";
+						$('#role-li').append("教师")
 					}
 				}
 			}else if (data.code == 0 ){
